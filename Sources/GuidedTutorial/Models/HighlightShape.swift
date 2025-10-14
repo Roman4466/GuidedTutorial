@@ -5,7 +5,7 @@
 //  Created by Roman Malynovsky on 14.10.2025.
 //
 
-import Foundation
+import SwiftUI
 
 public enum HighlightShape: Equatable {
     case rectangle(cornerRadius: CGFloat = 8)

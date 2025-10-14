@@ -5,7 +5,7 @@
 //  Created by Roman Malynovsky on 14.10.2025.
 //
 
-import Foundation
+import SwiftUI
 
 public struct TutorialStep: Identifiable {
     public let id: UUID
