@@ -12,9 +12,11 @@ struct GestureOverlay: View {
     let onSkip: () -> Void
 
     var body: some View {
-        Color.clear
-            .contentShape(Rectangle())
-            .highPriorityGesture(createGesture())
+        GeometryReader { geometry in
+            Color.clear
+                .contentShape(Rectangle())
+                .gesture(createGesture())
+        }
     }
 
     private func createGesture() -> _EndedGesture<DragGesture> {

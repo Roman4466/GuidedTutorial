@@ -17,6 +17,13 @@ struct TutorialOverlayView: View {
                let targetFrame = coordinator.targetFrames[currentStep.targetKey] {
 
                 ZStack {
+                    // Gesture overlay for skip (behind everything to not block touches)
+                    if let skipGesture = coordinator.currentFlow?.skipGesture {
+                        GestureOverlay(skipGesture: skipGesture) {
+                            coordinator.skipTutorial()
+                        }
+                    }
+
                     // Spotlight overlay
                     SpotlightOverlay(
                         targetFrame: targetFrame,
@@ -24,6 +31,7 @@ struct TutorialOverlayView: View {
                         dimColor: .black,
                         dimOpacity: 0.7
                     )
+                    .allowsHitTesting(false)
 
                     // Arrow pointing to target
                     if currentStep.showArrow {
@@ -36,9 +44,10 @@ struct TutorialOverlayView: View {
                             to: CGPoint(x: targetFrame.midX, y: targetFrame.midY),
                             color: .blue
                         )
+                        .allowsHitTesting(false)
                     }
 
-                    // Tooltip
+                    // Tooltip (on top to receive button taps)
                     TooltipView(
                         step: currentStep,
                         targetFrame: targetFrame,
@@ -50,14 +59,8 @@ struct TutorialOverlayView: View {
                             coordinator.skipTutorial()
                         } : nil
                     )
-
-                    // Gesture overlay for skip
-                    if let skipGesture = coordinator.currentFlow?.skipGesture {
-                        GestureOverlay(skipGesture: skipGesture) {
-                            coordinator.skipTutorial()
-                        }
-                    }
                 }
+                .frame(width: geometry.size.width, height: geometry.size.height)
                 .transition(.opacity)
                 .animation(.easeInOut, value: coordinator.currentStepIndex)
             }

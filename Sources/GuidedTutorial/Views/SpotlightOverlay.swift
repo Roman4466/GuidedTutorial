@@ -15,34 +15,23 @@ struct SpotlightOverlay: View {
 
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                // Dimmed background
-                dimColor.opacity(dimOpacity)
-                    .ignoresSafeArea()
+            Canvas { context, size in
+                // Fill the entire screen with dimmed color
+                context.fill(
+                    Path(CGRect(origin: .zero, size: size)),
+                    with: .color(dimColor.opacity(dimOpacity))
+                )
 
-                // Cut out spotlight
-                Rectangle()
-                    .fill(.black)
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .mask(
-                        Canvas { context, size in
-                            context.fill(
-                                Path(CGRect(origin: .zero, size: size)),
-                                with: .color(.black)
-                            )
-
-                            context.blendMode = .destinationOut
-
-                            let highlightPath = createHighlightPath(
-                                in: targetFrame,
-                                shape: highlightShape
-                            )
-                            context.fill(highlightPath, with: .color(.black))
-                        }
-                    )
-                    .compositingGroup()
-                    .allowsHitTesting(false)
+                // Cut out the spotlight area using destinationOut blend mode
+                context.blendMode = .destinationOut
+                let highlightPath = createHighlightPath(
+                    in: targetFrame,
+                    shape: highlightShape
+                )
+                context.fill(highlightPath, with: .color(.white))
             }
+            .frame(width: geometry.size.width, height: geometry.size.height)
+            .allowsHitTesting(false)
         }
     }
 
