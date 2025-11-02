@@ -44,7 +44,6 @@ struct TutorialOverlayView: View {
                         .allowsHitTesting(false)
                     }
 
-                    // Tooltip (on top to receive button taps)
                     TooltipView(
                         step: currentStep,
                         targetFrame: targetFrame,

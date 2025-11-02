@@ -76,7 +76,7 @@ struct ContentView: View {
                 title: "Star Icon",
                 description: "This is a decorative star icon. Pretty cool, right?",
                 highlightShape: .circle,
-                tooltipPosition: .bottom(offset: 30)
+                tooltipPosition: .top(offset: 30)
             ),
             TutorialStep(
                 targetKey: "counter",
@@ -90,14 +90,14 @@ struct ContentView: View {
                 title: "Increment Button",
                 description: "Tap this button to increase the counter value.",
                 highlightShape: .circle,
-                tooltipPosition: .leading(offset: 20)
+                tooltipPosition: .bottom(offset: 20)
             ),
             TutorialStep(
                 targetKey: "minusButton",
                 title: "Decrement Button",
                 description: "Tap this button to decrease the counter value.",
                 highlightShape: .circle,
-                tooltipPosition: .trailing(offset: 20)
+                tooltipPosition: .bottom(offset: 20)
             )
         ]
 
