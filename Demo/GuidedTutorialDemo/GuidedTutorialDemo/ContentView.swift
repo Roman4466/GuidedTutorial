@@ -20,10 +20,10 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 25) {
-                    // Header Section
-                    HStack {
+            ScrollViewReader { scrollProxy in
+                ScrollView {
+                    VStack(spacing: 25) {
+                        HStack {
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Welcome Back!")
                                 .font(.title2)
@@ -48,8 +48,8 @@ struct ContentView: View {
                     .background(Color.blue.opacity(0.1))
                     .cornerRadius(15)
                     .tutorialTarget("header", coordinator: coordinator)
+                    .id("header")
 
-                    // Image Gallery
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Gallery")
                             .font(.headline)
@@ -71,8 +71,8 @@ struct ContentView: View {
                         }
                         .tutorialTarget("imageGallery", coordinator: coordinator)
                     }
+                    .id("imageGallery")
 
-                    // Counter Section
                     VStack(spacing: 15) {
                         Text("Interactive Counter")
                             .font(.headline)
@@ -103,6 +103,7 @@ struct ContentView: View {
                     .padding()
                     .background(Color.green.opacity(0.1))
                     .cornerRadius(15)
+                    .id("counter")
 
                     // Settings Section
                     VStack(alignment: .leading, spacing: 15) {
@@ -119,6 +120,7 @@ struct ContentView: View {
                     .padding()
                     .background(Color.orange.opacity(0.1))
                     .cornerRadius(15)
+                    .id("settings")
 
                     // Form Section
                     VStack(alignment: .leading, spacing: 15) {
@@ -142,6 +144,7 @@ struct ContentView: View {
                     .padding()
                     .background(Color.pink.opacity(0.1))
                     .cornerRadius(15)
+                    .id("profile")
 
                     // Tutorial Controls
                     VStack(spacing: 12) {
@@ -172,6 +175,16 @@ struct ContentView: View {
                     .padding()
                 }
                 .padding()
+                .onChange(of: coordinator.currentStepIndex) { _ in
+                    scrollToCurrentTarget(scrollProxy: scrollProxy)
+                }
+                .onChange(of: coordinator.isPresented) { isPresented in
+                    if isPresented {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            scrollToCurrentTarget(scrollProxy: scrollProxy)
+                        }
+                    }
+                }
             }
             .navigationTitle("Tutorial Demo")
             .navigationBarTitleDisplayMode(.inline)
@@ -182,6 +195,38 @@ struct ContentView: View {
                     }
                     .tutorialTarget("settingsIcon", coordinator: coordinator)
                 }
+            }
+        }
+        }
+    }
+
+    private func scrollToCurrentTarget(scrollProxy: ScrollViewProxy) {
+        guard let currentStep = coordinator.currentStep else { return }
+
+        let scrollTargets: [String: String] = [
+            "header": "header",
+            "welcomeText": "header",
+            "notificationBell": "header",
+            "galleryTitle": "imageGallery",
+            "imageGallery": "imageGallery",
+            "counter": "counter",
+            "plusButton": "counter",
+            "minusButton": "counter",
+            "settingsTitle": "settings",
+            "notificationsToggle": "settings",
+            "darkModeToggle": "settings",
+            "profileTitle": "profile",
+            "usernameField": "profile",
+            "emailField": "profile",
+            "saveButton": "profile",
+            "basicTourButton": "profile",
+            "advancedTourButton": "profile",
+            "showcaseButton": "profile"
+        ]
+
+        if let scrollId = scrollTargets[currentStep.targetKey] {
+            withAnimation(.easeInOut(duration: 0.5)) {
+                scrollProxy.scrollTo(scrollId, anchor: .center)
             }
         }
     }

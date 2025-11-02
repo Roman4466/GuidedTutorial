@@ -1,0 +1,26 @@
+{
+  "" : {
+    "const-values" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.swiftconstvalues",
+    "dependencies" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.d",
+    "diagnostics" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.dia",
+    "emit-module-dependencies" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary-emit-module.dia",
+    "pch" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.swiftdeps"
+  },
+  "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/GuidedTutorialDemo/ContentView.swift" : {
+    "index-unit-output-path" : "/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/GuidedTutorialDemo/GuidedTutorialDemoApp.swift" : {
+    "index-unit-output-path" : "/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemoApp.o",
+    "llvm-bc" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemoApp.bc",
+    "object" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemoApp.o"
+  },
+  "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  }
+}

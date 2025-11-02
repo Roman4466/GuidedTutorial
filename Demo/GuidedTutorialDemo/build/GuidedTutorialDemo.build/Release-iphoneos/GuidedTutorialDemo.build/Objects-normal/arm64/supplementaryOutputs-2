@@ -1,0 +1,12 @@
+{
+  "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/GuidedTutorialDemo/ContentView.swift" : {
+    "abi-baseline-json" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo.abi.json",
+    "const-values" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.swiftconstvalues",
+    "dependencies" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.d",
+    "diagnostics" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-primary.dia",
+    "objc-header" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo-Swift.h",
+    "swiftdoc" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo.swiftdoc",
+    "swiftmodule" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo.swiftmodule",
+    "swiftsourceinfo" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Demo/GuidedTutorialDemo/build/GuidedTutorialDemo.build/Release-iphoneos/GuidedTutorialDemo.build/Objects-normal/arm64/GuidedTutorialDemo.swiftsourceinfo"
+  }
+}

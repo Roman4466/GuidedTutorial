@@ -1,0 +1,6 @@
+Target dependency graph (3 targets)
+Target 'GuidedTutorialDemo' in project 'GuidedTutorialDemo'
+➜ Explicit dependency on target 'GuidedTutorial' in project 'GuidedTutorial'
+Target 'GuidedTutorial' in project 'GuidedTutorial'
+➜ Explicit dependency on target 'GuidedTutorial' in project 'GuidedTutorial'
+Target 'GuidedTutorial' in project 'GuidedTutorial' (no dependencies)
