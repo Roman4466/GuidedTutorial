@@ -25,7 +25,6 @@ struct ArrowView: View {
                 lineWidth: 3
             )
 
-            // Draw arrowhead
             if animationProgress > 0.9 {
                 drawArrowhead(context: &context, at: to, angle: calculateAngle(from: from, to: to))
             }

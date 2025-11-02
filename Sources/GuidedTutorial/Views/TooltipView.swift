@@ -121,7 +121,6 @@ struct TooltipView: View {
             return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
 
         case .automatic:
-            // Automatic positioning logic
             let spaceAbove = targetFrame.minY
             let spaceBelow = screenSize.height - targetFrame.maxY
 

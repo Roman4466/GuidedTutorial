@@ -9,53 +9,57 @@ import SwiftUI
 import GuidedTutorial
 
 struct ContentView: View {
-    @StateObject private var coordinator = TutorialCoordinator()
+    @ObservedObject var coordinator: TutorialCoordinator
     @State private var counter = 0
 
     var body: some View {
-        VStack(spacing: 30) {
-            Text("Guided Tutorial Demo")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .tutorialTarget("title", coordinator: coordinator)
+        ZStack {
+            Color.clear
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-            Image(systemName: "star.fill")
-                .imageScale(.large)
-                .font(.system(size: 60))
-                .foregroundStyle(.yellow)
-                .tutorialTarget("icon", coordinator: coordinator)
+            VStack(spacing: 30) {
+                Text("Guided Tutorial Demo")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .tutorialTarget("title", coordinator: coordinator)
 
-            HStack(spacing: 20) {
-                Button {
-                    counter -= 1
-                } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.title)
+                Image(systemName: "star.fill")
+                    .imageScale(.large)
+                    .font(.system(size: 60))
+                    .foregroundStyle(.yellow)
+                    .tutorialTarget("icon", coordinator: coordinator)
+
+                HStack(spacing: 20) {
+                    Button {
+                        counter -= 1
+                    } label: {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title)
+                    }
+                    .tutorialTarget("minusButton", coordinator: coordinator)
+
+                    Text("\(counter)")
+                        .font(.system(size: 48, weight: .bold))
+                        .frame(width: 100)
+                        .tutorialTarget("counter", coordinator: coordinator)
+
+                    Button {
+                        counter += 1
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title)
+                    }
+                    .tutorialTarget("plusButton", coordinator: coordinator)
                 }
-                .tutorialTarget("minusButton", coordinator: coordinator)
 
-                Text("\(counter)")
-                    .font(.system(size: 48, weight: .bold))
-                    .frame(width: 100)
-                    .tutorialTarget("counter", coordinator: coordinator)
-
-                Button {
-                    counter += 1
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.title)
+                Button("Start Tutorial") {
+                    startTutorial()
                 }
-                .tutorialTarget("plusButton", coordinator: coordinator)
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
             }
-
-            Button("Start Tutorial") {
-                startTutorial()
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            .padding()
         }
-        .padding()
-        .guidedTutorial(coordinator: coordinator)
     }
 
     private func startTutorial() {
@@ -115,5 +119,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(coordinator: TutorialCoordinator())
 }

@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import GuidedTutorial
 
 @main
 struct GuidedTutorialDemoApp: App {
+    @StateObject private var coordinator = TutorialCoordinator()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(coordinator: coordinator)
+                .guidedTutorial(coordinator: coordinator)
         }
     }
 }

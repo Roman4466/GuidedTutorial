@@ -17,14 +17,12 @@ struct TutorialOverlayView: View {
                let targetFrame = coordinator.targetFrames[currentStep.targetKey] {
 
                 ZStack {
-                    // Gesture overlay for skip (behind everything to not block touches)
                     if let skipGesture = coordinator.currentFlow?.skipGesture {
                         GestureOverlay(skipGesture: skipGesture) {
                             coordinator.skipTutorial()
                         }
                     }
 
-                    // Spotlight overlay
                     SpotlightOverlay(
                         targetFrame: targetFrame,
                         highlightShape: currentStep.highlightShape,
@@ -33,7 +31,6 @@ struct TutorialOverlayView: View {
                     )
                     .allowsHitTesting(false)
 
-                    // Arrow pointing to target
                     if currentStep.showArrow {
                         ArrowView(
                             from: calculateTooltipPosition(
@@ -69,7 +66,6 @@ struct TutorialOverlayView: View {
     }
 
     private func calculateTooltipPosition(step: TutorialStep, targetFrame: CGRect, screenSize: CGSize) -> CGPoint {
-        // Simplified calculation - you might want to reuse logic from TooltipView
         switch step.tooltipPosition {
         case .top:
             return CGPoint(x: targetFrame.midX, y: targetFrame.minY - 100)

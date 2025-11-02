@@ -16,13 +16,11 @@ struct SpotlightOverlay: View {
     var body: some View {
         GeometryReader { geometry in
             Canvas { context, size in
-                // Fill the entire screen with dimmed color
                 context.fill(
                     Path(CGRect(origin: .zero, size: size)),
                     with: .color(dimColor.opacity(dimOpacity))
                 )
 
-                // Cut out the spotlight area using destinationOut blend mode
                 context.blendMode = .destinationOut
                 let highlightPath = createHighlightPath(
                     in: targetFrame,
@@ -54,8 +52,6 @@ struct SpotlightOverlay: View {
             return Path(roundedRect: frame, cornerRadius: cornerRadius)
 
         case .custom:
-            // For custom shapes, we'd need a different approach
-            // For now, fall back to rounded rectangle
             return Path(roundedRect: frame, cornerRadius: 8)
         }
     }
