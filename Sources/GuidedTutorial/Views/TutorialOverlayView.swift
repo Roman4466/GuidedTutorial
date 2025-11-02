@@ -38,7 +38,10 @@ struct TutorialOverlayView: View {
                                 targetFrame: targetFrame,
                                 screenSize: geometry.size
                             ),
-                            to: CGPoint(x: targetFrame.midX, y: targetFrame.midY),
+                            to: calculateArrowTargetPoint(
+                                tooltipPosition: currentStep.tooltipPosition,
+                                targetFrame: targetFrame
+                            ),
                             color: .blue
                         )
                         .allowsHitTesting(false)
@@ -83,6 +86,32 @@ struct TutorialOverlayView: View {
             }
         default:
             return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
+        }
+    }
+
+    private func calculateArrowTargetPoint(tooltipPosition: TooltipPosition, targetFrame: CGRect) -> CGPoint {
+        switch tooltipPosition {
+        case .top:
+            return CGPoint(x: targetFrame.midX, y: targetFrame.minY)
+        case .bottom:
+            return CGPoint(x: targetFrame.midX, y: targetFrame.maxY)
+        case .leading:
+            return CGPoint(x: targetFrame.minX, y: targetFrame.midY)
+        case .trailing:
+            return CGPoint(x: targetFrame.maxX, y: targetFrame.midY)
+        case .topLeading:
+            return CGPoint(x: targetFrame.minX, y: targetFrame.minY)
+        case .topTrailing:
+            return CGPoint(x: targetFrame.maxX, y: targetFrame.minY)
+        case .bottomLeading:
+            return CGPoint(x: targetFrame.minX, y: targetFrame.maxY)
+        case .bottomTrailing:
+            return CGPoint(x: targetFrame.maxX, y: targetFrame.maxY)
+        case .center:
+            return CGPoint(x: targetFrame.midX, y: targetFrame.midY)
+        case .automatic:
+            // For automatic, determine based on available space
+            return CGPoint(x: targetFrame.midX, y: targetFrame.midY)
         }
     }
 }
