@@ -19,17 +19,28 @@ struct GallerySection: View {
                 .font(.headline)
                 .tutorialTarget("galleryTitle", coordinator: coordinator)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
-                    ForEach(0..<5) { index in
-                        Image(systemName: ["photo", "camera", "video", "music.note", "book"][index])
-                            .font(.system(size: 40))
-                            .frame(width: 100, height: 100)
-                            .background(Color.purple.opacity(0.2))
-                            .cornerRadius(12)
-                            .onTapGesture {
-                                selectedImage = index
-                            }
+            ScrollViewReader { galleryScrollProxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 15) {
+                        ForEach(0..<5) { index in
+                            Image(systemName: ["photo", "camera", "video", "music.note", "book"][index])
+                                .font(.system(size: 40))
+                                .frame(width: 100, height: 100)
+                                .background(Color.purple.opacity(0.2))
+                                .cornerRadius(12)
+                                .onTapGesture {
+                                    selectedImage = index
+                                }
+                                .tutorialTarget("galleryItem\(index)", coordinator: coordinator)
+                                .id("galleryItem\(index)")
+                        }
+                    }
+                }
+                .onChange(of: coordinator.currentStep?.targetKey) { targetKey in
+                    if let targetKey = targetKey, targetKey.hasPrefix("galleryItem") {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            galleryScrollProxy.scrollTo(targetKey, anchor: .center)
+                        }
                     }
                 }
             }

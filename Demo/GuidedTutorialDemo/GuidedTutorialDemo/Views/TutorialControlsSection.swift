@@ -13,6 +13,7 @@ struct TutorialControlsSection: View {
     let onStartBasicTutorial: () -> Void
     let onStartAdvancedTutorial: () -> Void
     let onStartFeatureShowcase: () -> Void
+    let onStartGalleryTutorial: () -> Void
 
     var body: some View {
         VStack(spacing: 12) {
@@ -33,12 +34,21 @@ struct TutorialControlsSection: View {
                 .tutorialTarget("advancedTourButton", coordinator: coordinator)
             }
 
-            Button("Features Showcase") {
-                onStartFeatureShowcase()
+            HStack(spacing: 15) {
+                Button("Features Showcase") {
+                    onStartFeatureShowcase()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.purple)
+                .tutorialTarget("showcaseButton", coordinator: coordinator)
+
+                Button("Gallery Tour") {
+                    onStartGalleryTutorial()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+                .tutorialTarget("galleryTourButton", coordinator: coordinator)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.purple)
-            .tutorialTarget("showcaseButton", coordinator: coordinator)
         }
         .padding()
     }

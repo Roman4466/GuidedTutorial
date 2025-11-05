@@ -257,4 +257,67 @@ struct TutorialFlows {
 
         coordinator.startFlow(flow)
     }
+
+    // MARK: - Gallery Items Tutorial
+    static func galleryItemsTutorial(coordinator: TutorialCoordinator) {
+        let galleryIcons = ["photo", "camera", "video", "music.note", "book"]
+        let galleryTitles = ["Photos", "Camera", "Videos", "Music", "Books"]
+        let galleryDescriptions = [
+            "Browse through your photo collection. Tap to view full-size images.",
+            "Open the camera to capture new moments instantly.",
+            "Watch your video library. All your recorded clips in one place.",
+            "Listen to your music collection. Explore playlists and albums.",
+            "Access your digital book library. Continue reading where you left off."
+        ]
+
+        var steps: [TutorialStep] = [
+            TutorialStep(
+                targetKey: "galleryTitle",
+                title: "Gallery Overview",
+                description: "This gallery contains different media types. Let's explore each one!",
+                highlightShape: .rectangle(cornerRadius: 8),
+                tooltipPosition: .bottom(offset: 15),
+                showArrow: true
+            )
+        ]
+
+        for index in 0..<5 {
+            steps.append(
+                TutorialStep(
+                    targetKey: "galleryItem\(index)",
+                    title: galleryTitles[index],
+                    description: galleryDescriptions[index],
+                    highlightShape: .roundedRect(cornerRadius: 12),
+                    tooltipPosition: .bottom(offset: 15),
+                    showArrow: true,
+                    customContent: {
+                        AnyView(
+                            HStack(spacing: 5) {
+                                Image(systemName: galleryIcons[index])
+                                    .foregroundColor(.purple)
+                                Text("Item \(index + 1) of 5")
+                                    .font(.caption)
+                                    .foregroundColor(.purple)
+                            }
+                        )
+                    }
+                )
+            )
+        }
+
+        let flow = TutorialFlow(
+            name: "Gallery Tour",
+            steps: steps,
+            canBeSkipped: true,
+            skipGesture: .swipeDown,
+            onComplete: {
+                print("✅ Gallery tutorial completed!")
+            },
+            onSkip: {
+                print("⏭️ Gallery tutorial skipped!")
+            }
+        )
+
+        coordinator.startFlow(flow)
+    }
 }
