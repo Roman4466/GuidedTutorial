@@ -15,26 +15,37 @@ struct GestureOverlay: View {
         GeometryReader { geometry in
             Color.clear
                 .contentShape(Rectangle())
-                .gesture(createGesture())
+                .simultaneousGesture(createGesture())
         }
     }
 
-    private func createGesture() -> _EndedGesture<DragGesture> {
-        DragGesture(minimumDistance: 50)
+    private func createGesture() -> some Gesture {
+        DragGesture(minimumDistance: 100)
             .onEnded { value in
                 handleGestureEnd(value: value)
             }
     }
 
     private func handleGestureEnd(value: DragGesture.Value) {
+        let velocity = CGSize(
+            width: value.predictedEndLocation.x - value.location.x,
+            height: value.predictedEndLocation.y - value.location.y
+        )
+
         switch skipGesture {
         case .swipeDown:
-            if value.translation.height > 100 && abs(value.translation.width) < 50 {
+            // Require strong downward swipe with high velocity
+            if value.translation.height > 150
+                && abs(value.translation.width) < 80
+                && velocity.height > 100 {
                 onSkip()
             }
 
         case .swipeUp:
-            if value.translation.height < -100 && abs(value.translation.width) < 50 {
+            // Require strong upward swipe with high velocity
+            if value.translation.height < -150
+                && abs(value.translation.width) < 80
+                && velocity.height < -100 {
                 onSkip()
             }
 

@@ -1,0 +1,12 @@
+{
+  "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/Sources/GuidedTutorial/Coordinator/TutorialCoordinator.swift" : {
+    "abi-baseline-json" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial.abi.json",
+    "const-values" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial-primary.swiftconstvalues",
+    "dependencies" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial-primary.d",
+    "diagnostics" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial-primary.dia",
+    "objc-header" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial-Swift.h",
+    "swiftdoc" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial.swiftdoc",
+    "swiftmodule" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial.swiftmodule",
+    "swiftsourceinfo" : "/Users/romanmalynovsky/mohyla/frameworks/Framework/GuidedTutorial/build/GuidedTutorial.build/Release-iphoneos/GuidedTutorial.build/Objects-normal/arm64/GuidedTutorial.swiftsourceinfo"
+  }
+}

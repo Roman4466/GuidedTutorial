@@ -106,29 +106,37 @@ struct TooltipView: View {
 
         case .topLeading(let offset):
             let yPos = targetFrame.minY - offset - tooltipHeight / 2
+            // Position tooltip with its top-right corner near target's top-left
+            let xPos = targetFrame.minX - offset - tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, targetFrame.minX - offset),
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
                 y: max(tooltipHeight / 2 + padding, yPos)
             )
 
         case .topTrailing(let offset):
             let yPos = targetFrame.minY - offset - tooltipHeight / 2
+            // Position tooltip with its top-left corner near target's top-right
+            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
             return CGPoint(
-                x: min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.maxX + offset),
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
                 y: max(tooltipHeight / 2 + padding, yPos)
             )
 
         case .bottomLeading(let offset):
             let yPos = targetFrame.maxY + offset + tooltipHeight / 2
+            // Position tooltip with its bottom-right corner near target's bottom-left
+            let xPos = targetFrame.minX - offset - tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, targetFrame.minX - offset),
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
                 y: min(screenSize.height - tooltipHeight / 2 - padding, yPos)
             )
 
         case .bottomTrailing(let offset):
             let yPos = targetFrame.maxY + offset + tooltipHeight / 2
+            // Position tooltip with its bottom-left corner near target's bottom-right
+            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
             return CGPoint(
-                x: min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.maxX + offset),
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
                 y: min(screenSize.height - tooltipHeight / 2 - padding, yPos)
             )
 

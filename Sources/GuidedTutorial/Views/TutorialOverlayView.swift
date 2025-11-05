@@ -68,23 +68,97 @@ struct TutorialOverlayView: View {
     }
 
     private func calculateTooltipPosition(step: TutorialStep, targetFrame: CGRect, screenSize: CGSize) -> CGPoint {
+        let tooltipWidth: CGFloat = min(screenSize.width - 32, 320)
+        let estimatedHeight: CGFloat = 150
+        let padding: CGFloat = 16
+
         switch step.tooltipPosition {
-        case .top:
-            return CGPoint(x: targetFrame.midX, y: targetFrame.minY - 100)
-        case .bottom:
-            return CGPoint(x: targetFrame.midX, y: targetFrame.maxY + 100)
-        case .leading:
-            return CGPoint(x: targetFrame.minX - 100, y: targetFrame.midY)
-        case .trailing:
-            return CGPoint(x: targetFrame.maxX + 100, y: targetFrame.midY)
+        case .top(let offset):
+            let yPos = targetFrame.minY - offset - estimatedHeight / 2
+            let xPos = max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX))
+            return CGPoint(x: xPos, y: max(estimatedHeight / 2 + padding, yPos))
+
+        case .bottom(let offset):
+            let yPos = targetFrame.maxY + offset + estimatedHeight / 2
+            let xPos = max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX))
+            return CGPoint(x: xPos, y: min(screenSize.height - estimatedHeight / 2 - padding, yPos))
+
+        case .leading(let offset):
+            let xPos = targetFrame.minX - offset - tooltipWidth / 2
+            let yPos = max(estimatedHeight / 2 + padding, min(screenSize.height - estimatedHeight / 2 - padding, targetFrame.midY))
+            return CGPoint(x: max(tooltipWidth / 2 + padding, xPos), y: yPos)
+
+        case .trailing(let offset):
+            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
+            let yPos = max(estimatedHeight / 2 + padding, min(screenSize.height - estimatedHeight / 2 - padding, targetFrame.midY))
+            return CGPoint(x: min(screenSize.width - tooltipWidth / 2 - padding, xPos), y: yPos)
+
+        case .topLeading(let offset):
+            let yPos = targetFrame.minY - offset - estimatedHeight / 2
+            let xPos = targetFrame.minX - offset - tooltipWidth / 2
+            return CGPoint(
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
+                y: max(estimatedHeight / 2 + padding, yPos)
+            )
+
+        case .topTrailing(let offset):
+            let yPos = targetFrame.minY - offset - estimatedHeight / 2
+            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
+            return CGPoint(
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
+                y: max(estimatedHeight / 2 + padding, yPos)
+            )
+
+        case .bottomLeading(let offset):
+            let yPos = targetFrame.maxY + offset + estimatedHeight / 2
+            let xPos = targetFrame.minX - offset - tooltipWidth / 2
+            return CGPoint(
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
+                y: min(screenSize.height - estimatedHeight / 2 - padding, yPos)
+            )
+
+        case .bottomTrailing(let offset):
+            let yPos = targetFrame.maxY + offset + estimatedHeight / 2
+            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
+            return CGPoint(
+                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
+                y: min(screenSize.height - estimatedHeight / 2 - padding, yPos)
+            )
+
+        case .center:
+            return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
+
         case .automatic:
+            let spaceAbove = targetFrame.minY
             let spaceBelow = screenSize.height - targetFrame.maxY
-            if spaceBelow > 200 {
-                return CGPoint(x: targetFrame.midX, y: targetFrame.maxY + 100)
-            } else {
-                return CGPoint(x: targetFrame.midX, y: targetFrame.minY - 100)
+            let spaceLeft = targetFrame.minX
+            let spaceRight = screenSize.width - targetFrame.maxX
+
+            let positions = [
+                (space: spaceBelow, position: CGPoint(
+                    x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX)),
+                    y: targetFrame.maxY + padding + estimatedHeight / 2
+                )),
+                (space: spaceAbove, position: CGPoint(
+                    x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX)),
+                    y: targetFrame.minY - padding - estimatedHeight / 2
+                )),
+                (space: spaceRight, position: CGPoint(
+                    x: targetFrame.maxX + padding + tooltipWidth / 2,
+                    y: max(estimatedHeight / 2 + padding, min(screenSize.height - estimatedHeight / 2 - padding, targetFrame.midY))
+                )),
+                (space: spaceLeft, position: CGPoint(
+                    x: targetFrame.minX - padding - tooltipWidth / 2,
+                    y: max(estimatedHeight / 2 + padding, min(screenSize.height - estimatedHeight / 2 - padding, targetFrame.midY))
+                ))
+            ]
+
+            if let bestPosition = positions.max(by: { $0.space < $1.space })?.position {
+                let clampedX = max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, bestPosition.x))
+                let clampedY = max(estimatedHeight / 2 + padding, min(screenSize.height - estimatedHeight / 2 - padding, bestPosition.y))
+                return CGPoint(x: clampedX, y: clampedY)
             }
-        default:
+
             return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
         }
     }
