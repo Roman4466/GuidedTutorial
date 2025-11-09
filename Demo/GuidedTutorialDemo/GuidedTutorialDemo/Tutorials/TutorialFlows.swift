@@ -41,14 +41,16 @@ struct TutorialFlows {
                 title: "Increase",
                 description: "Tap to increment the counter.",
                 highlightShape: .circle,
-                tooltipPosition: .leading(offset: 20)
+                tooltipPosition: .top(offset: 20),
+                showArrow: true
             ),
             TutorialStep(
                 targetKey: "minusButton",
                 title: "Decrease",
                 description: "Tap to decrement the counter.",
                 highlightShape: .circle,
-                tooltipPosition: .trailing(offset: 20)
+                tooltipPosition: .top(offset: 20),
+                showArrow: true
             )
         ]
 
@@ -316,6 +318,114 @@ struct TutorialFlows {
             onSkip: {
                 print("⏭️ Gallery tutorial skipped!")
             }
+        )
+
+        coordinator.startFlow(flow)
+    }
+
+    // MARK: - Customization Demo
+    static func customizationDemo(coordinator: TutorialCoordinator) {
+        let steps = [
+            TutorialStep(
+                targetKey: "header",
+                title: "Global Styling Example",
+                description: "This tutorial uses custom global styling for all tooltips (unless overridden per step). Notice the blue background and different shadows!",
+                highlightShape: .roundedRect(cornerRadius: 15),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "counter",
+                title: "Per-Step Tooltip Override",
+                description: "This step overrides the global tooltip style with extreme corner radius (100) and pink background!",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    backgroundColor: Color(red: 1.0, green: 0.75, blue: 0.8),
+                    cornerRadius: 100,
+                    shadowColor: .purple,
+                    shadowOpacity: 0.4,
+                    shadowRadius: 15,
+                    shadowX: 5,
+                    shadowY: 10
+                )
+            ),
+            TutorialStep(
+                targetKey: "plusButton",
+                title: "Sharp Corners & No Shadow",
+                description: "This tooltip has zero corner radius (sharp corners) and no shadow!",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    backgroundColor: Color(red: 0.9, green: 1.0, blue: 0.9),
+                    cornerRadius: 0,
+                    shadowColor: .clear,
+                    shadowOpacity: 0,
+                    shadowRadius: 0,
+                    shadowX: 0,
+                    shadowY: 0
+                )
+            ),
+            TutorialStep(
+                targetKey: "minusButton",
+                title: "Custom Blur/Dim",
+                description: "This step has a custom blue dim overlay with low opacity instead of the default black!",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true,
+                blurStyle: BlurStyle(
+                    dimColor: .blue,
+                    dimOpacity: 0.3
+                )
+            ),
+            TutorialStep(
+                targetKey: "notificationBell",
+                title: "Red Dim Overlay",
+                description: "Each step can have its own blur style. This one uses a red tint!",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                blurStyle: BlurStyle(
+                    dimColor: .red,
+                    dimOpacity: 0.4
+                )
+            ),
+            TutorialStep(
+                targetKey: "imageGallery",
+                title: "Back to Global Defaults",
+                description: "This step doesn't specify custom styling, so it uses the global defaults (blue tooltip from the flow settings).",
+                highlightShape: .roundedRect(cornerRadius: 12),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            )
+        ]
+
+        let flow = TutorialFlow(
+            name: "Customization Demo",
+            steps: steps,
+            canBeSkipped: true,
+            skipGesture: .swipeDown,
+            onComplete: {
+                print("✅ Customization demo completed!")
+            },
+            onSkip: {
+                print("⏭️ Customization demo skipped!")
+            },
+            defaultTooltipStyle: TooltipStyle(
+                backgroundColor: Color(red: 0.85, green: 0.95, blue: 1.0),
+                cornerRadius: 20,
+                shadowColor: .blue,
+                shadowOpacity: 0.3,
+                shadowRadius: 12,
+                shadowX: 0,
+                shadowY: 8
+            ),
+            defaultBlurStyle: BlurStyle(
+                dimColor: .black,
+                dimOpacity: 0.75
+            )
         )
 
         coordinator.startFlow(flow)

@@ -10,15 +10,14 @@ import SwiftUI
 struct SpotlightOverlay: View {
     let targetFrame: CGRect
     let highlightShape: HighlightShape
-    let dimColor: Color
-    let dimOpacity: Double
+    let blurStyle: BlurStyle
 
     var body: some View {
         GeometryReader { geometry in
             Canvas { context, size in
                 context.fill(
                     Path(CGRect(origin: .zero, size: size)),
-                    with: .color(dimColor.opacity(dimOpacity))
+                    with: .color(blurStyle.dimColor.opacity(blurStyle.dimOpacity))
                 )
 
                 context.blendMode = .destinationOut

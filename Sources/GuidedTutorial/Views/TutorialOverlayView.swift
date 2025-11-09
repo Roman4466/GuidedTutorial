@@ -26,8 +26,7 @@ struct TutorialOverlayView: View {
                     SpotlightOverlay(
                         targetFrame: targetFrame,
                         highlightShape: currentStep.highlightShape,
-                        dimColor: .black,
-                        dimOpacity: 0.7
+                        blurStyle: currentStep.blurStyle ?? coordinator.currentFlow?.defaultBlurStyle ?? .default
                     )
                     .allowsHitTesting(false)
 
@@ -56,7 +55,8 @@ struct TutorialOverlayView: View {
                         },
                         onSkip: coordinator.currentFlow?.canBeSkipped == true ? {
                             coordinator.skipTutorial()
-                        } : nil
+                        } : nil,
+                        tooltipStyle: currentStep.tooltipStyle ?? coordinator.currentFlow?.defaultTooltipStyle ?? .default
                     )
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)

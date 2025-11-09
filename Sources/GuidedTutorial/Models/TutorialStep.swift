@@ -18,6 +18,8 @@ public struct TutorialStep: Identifiable {
     public let showArrow: Bool
     public let blockOtherInteractions: Bool
     public let customContent: (() -> AnyView)?
+    public let tooltipStyle: TooltipStyle?
+    public let blurStyle: BlurStyle?
 
     public init(
         id: UUID = UUID(),
@@ -29,7 +31,9 @@ public struct TutorialStep: Identifiable {
         tooltipPosition: TooltipPosition = .automatic,
         showArrow: Bool = true,
         blockOtherInteractions: Bool = true,
-        customContent: (() -> AnyView)? = nil
+        customContent: (() -> AnyView)? = nil,
+        tooltipStyle: TooltipStyle? = nil,
+        blurStyle: BlurStyle? = nil
     ) {
         self.id = id
         self.targetKey = targetKey
@@ -41,5 +45,7 @@ public struct TutorialStep: Identifiable {
         self.showArrow = showArrow
         self.blockOtherInteractions = blockOtherInteractions
         self.customContent = customContent
+        self.tooltipStyle = tooltipStyle
+        self.blurStyle = blurStyle
     }
 }

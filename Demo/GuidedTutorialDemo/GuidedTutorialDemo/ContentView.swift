@@ -52,7 +52,8 @@ struct ContentView: View {
                             onStartBasicTutorial: { TutorialFlows.basicTutorial(coordinator: coordinator) },
                             onStartAdvancedTutorial: { TutorialFlows.advancedTutorial(coordinator: coordinator) },
                             onStartFeatureShowcase: { TutorialFlows.featureShowcase(coordinator: coordinator) },
-                            onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) }
+                            onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) },
+                            onStartCustomizationDemo: { TutorialFlows.customizationDemo(coordinator: coordinator) }
                         )
                     }
                     .padding()

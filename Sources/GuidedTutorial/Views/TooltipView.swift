@@ -13,6 +13,7 @@ struct TooltipView: View {
     let screenSize: CGSize
     let onNext: () -> Void
     let onSkip: (() -> Void)?
+    let tooltipStyle: TooltipStyle
 
     @State private var tooltipSize: CGSize = .zero
 
@@ -54,11 +55,16 @@ struct TooltipView: View {
         }
         .padding(16)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.white)
-                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+            RoundedRectangle(cornerRadius: tooltipStyle.cornerRadius)
+                .fill(tooltipStyle.backgroundColor)
+                .shadow(
+                    color: tooltipStyle.shadowColor.opacity(tooltipStyle.shadowOpacity),
+                    radius: tooltipStyle.shadowRadius,
+                    x: tooltipStyle.shadowX,
+                    y: tooltipStyle.shadowY
+                )
         )
-        .frame(maxWidth: min(screenSize.width - 32, 320))
+        .frame(maxWidth: tooltipStyle.maxWidth ?? min(screenSize.width - 32, 320))
         .overlay(
             GeometryReader { geo in
                 Color.clear.preference(key: SizePreferenceKey.self, value: geo.size)
@@ -71,7 +77,8 @@ struct TooltipView: View {
     }
 
     private func calculatePosition(tooltipSize: CGSize) -> CGPoint {
-        let tooltipWidth = tooltipSize.width == 0 ? min(screenSize.width - 32, 320) : tooltipSize.width
+        let defaultMaxWidth = tooltipStyle.maxWidth ?? min(screenSize.width - 32, 320)
+        let tooltipWidth = tooltipSize.width == 0 ? defaultMaxWidth : tooltipSize.width
         let tooltipHeight = tooltipSize.height == 0 ? 200 : tooltipSize.height
         let padding: CGFloat = 16
 

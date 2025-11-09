@@ -84,7 +84,7 @@ struct ArrowView: View {
         
         let tangentAngle = atan2(dy, dx)
         
-        let lineLength: CGFloat = 15
+        let lineLength: CGFloat = 10
         let arrowAngle: CGFloat = 30 * .pi / 180
         
         // Left line
