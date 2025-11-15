@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TutorialOverlayView: View {
     @ObservedObject var coordinator: TutorialCoordinator
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         GeometryReader { geometry in
@@ -41,7 +42,7 @@ struct TutorialOverlayView: View {
                                 tooltipPosition: currentStep.tooltipPosition,
                                 targetFrame: targetFrame
                             ),
-                            color: .blue
+                            arrowStyle: currentStep.arrowStyle ?? coordinator.currentFlow?.defaultArrowStyle ?? .default
                         )
                         .allowsHitTesting(false)
                     }
@@ -61,7 +62,9 @@ struct TutorialOverlayView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .transition(.opacity)
-                .animation(.easeInOut, value: coordinator.currentStepIndex)
+                .animation(reduceMotion ? .none : .easeInOut, value: coordinator.currentStepIndex)
+                .accessibilityElement(children: .contain)
+                .accessibilityLabel("Tutorial overlay")
             }
         }
         .ignoresSafeArea()

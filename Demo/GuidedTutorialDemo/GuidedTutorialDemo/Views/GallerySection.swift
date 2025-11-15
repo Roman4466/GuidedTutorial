@@ -25,8 +25,9 @@ struct GallerySection: View {
                         ForEach(0..<5) { index in
                             Image(systemName: ["photo", "camera", "video", "music.note", "book"][index])
                                 .font(.system(size: 40))
+                                .foregroundColor(Color(red: 0.6, green: 0.5, blue: 0.4))
                                 .frame(width: 100, height: 100)
-                                .background(Color.purple.opacity(0.2))
+                                .background(Color(red: 0.85, green: 0.80, blue: 0.72))
                                 .cornerRadius(12)
                                 .onTapGesture {
                                     selectedImage = index

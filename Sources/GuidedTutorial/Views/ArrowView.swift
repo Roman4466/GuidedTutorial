@@ -36,57 +36,69 @@ extension CGPath {
 struct ArrowView: View {
     let from: CGPoint
     let to: CGPoint
-    let color: Color
+    let arrowStyle: ArrowStyle
 
     @State private var animationProgress: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
-        Canvas { context, size in
-            let path = createCurvedPath(from: from, to: to)
-            let trimmedPath = path.trimmedPath(from: 0, to: animationProgress)
+        if let customView = arrowStyle.customArrowView {
+            customView(from, to)
+                .accessibilityHidden(true)
+        } else {
+            Canvas { context, size in
+                let path = createCurvedPath(from: from, to: to, curveIntensity: arrowStyle.curveIntensity)
+                let trimmedPath = path.trimmedPath(from: 0, to: animationProgress)
 
-            context.stroke(
-                trimmedPath,
-                with: .color(color),
-                lineWidth: 3
-            )
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 0.6).repeatForever(autoreverses: false)) {
-                animationProgress = 1.0
+                context.stroke(
+                    trimmedPath,
+                    with: .color(arrowStyle.color),
+                    lineWidth: arrowStyle.lineWidth
+                )
             }
+            .onAppear {
+                if reduceMotion || !arrowStyle.animationEnabled {
+                    // No animation, just show the full arrow
+                    animationProgress = 1.0
+                } else {
+                    withAnimation(.easeInOut(duration: arrowStyle.animationDuration).repeatForever(autoreverses: false)) {
+                        animationProgress = 1.0
+                    }
+                }
+            }
+            .accessibilityHidden(true)
         }
     }
 
-    private func createCurvedPath(from start: CGPoint, to end: CGPoint) -> Path {
+    private func createCurvedPath(from start: CGPoint, to end: CGPoint, curveIntensity: CGFloat) -> Path {
         var path = Path()
         path.move(to: start)
 
         let controlPoint = CGPoint(
             x: (start.x + end.x) / 2,
-            y: min(start.y, end.y)
+            y: min(start.y, end.y) - (abs(start.y - end.y) * (curveIntensity - 1.0) * 0.5)
         )
 
         path.addQuadCurve(to: end, control: controlPoint)
-        
+
         // Calculate tangent at end point (t=1) for quadratic Bezier
         // Quadratic Bezier: B(t) = (1-t)²*P0 + 2(1-t)t*P1 + t²*P2
         // Derivative: B'(t) = 2(1-t)(P1-P0) + 2t(P2-P1)
         // At t=1: B'(1) = 2(P2-P1)
-        
+
         // But we need tangent slightly before the end to get proper direction
         let t: CGFloat = 0.99
         let oneMinusT = 1 - t
-        
+
         // Derivative components
         let dx = 2 * oneMinusT * (controlPoint.x - start.x) + 2 * t * (end.x - controlPoint.x)
         let dy = 2 * oneMinusT * (controlPoint.y - start.y) + 2 * t * (end.y - controlPoint.y)
-        
+
         let tangentAngle = atan2(dy, dx)
-        
-        let lineLength: CGFloat = 10
-        let arrowAngle: CGFloat = 30 * .pi / 180
-        
+
+        let lineLength = arrowStyle.arrowheadLength
+        let arrowAngle = arrowStyle.arrowheadAngle * .pi / 180
+
         // Left line
         let leftAngle = tangentAngle + .pi - arrowAngle
         let leftPoint = CGPoint(
@@ -95,7 +107,7 @@ struct ArrowView: View {
         )
         path.addLine(to: leftPoint)
         path.move(to: end)
-        
+
         // Right line
         let rightAngle = tangentAngle + .pi + arrowAngle
         let rightPoint = CGPoint(
@@ -103,7 +115,7 @@ struct ArrowView: View {
             y: end.y + lineLength * sin(rightAngle)
         )
         path.addLine(to: rightPoint)
-        
+
         return path
     }
 }

@@ -329,74 +329,97 @@ struct TutorialFlows {
             TutorialStep(
                 targetKey: "header",
                 title: "Global Styling Example",
-                description: "This tutorial uses custom global styling for all tooltips (unless overridden per step). Notice the blue background and different shadows!",
+                description: "This tutorial uses custom global styling for all tooltips (unless overridden per step). Notice the warm earth-toned background and serif fonts!",
                 highlightShape: .roundedRect(cornerRadius: 15),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true
             ),
             TutorialStep(
                 targetKey: "counter",
-                title: "Per-Step Tooltip Override",
-                description: "This step overrides the global tooltip style with extreme corner radius (100) and pink background!",
+                title: "Custom Fonts & Colors",
+                description: "This step showcases custom fonts! The title uses a rounded design font and the description uses a monospaced font.",
                 highlightShape: .circle,
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true,
                 tooltipStyle: TooltipStyle(
-                    backgroundColor: Color(red: 1.0, green: 0.75, blue: 0.8),
-                    cornerRadius: 100,
-                    shadowColor: .purple,
-                    shadowOpacity: 0.4,
+                    backgroundColor: Color(red: 0.95, green: 0.92, blue: 0.88),
+                    cornerRadius: 20,
+                    shadowColor: Color(red: 0.7, green: 0.5, blue: 0.3),
+                    shadowOpacity: 0.3,
                     shadowRadius: 15,
-                    shadowX: 5,
-                    shadowY: 10
+                    shadowX: 0,
+                    shadowY: 8,
+                    titleFont: .system(.title3, design: .rounded, weight: .bold),
+                    titleColor: Color(red: 0.6, green: 0.4, blue: 0.2),
+                    descriptionFont: .system(.body, design: .monospaced),
+                    descriptionColor: Color(red: 0.5, green: 0.4, blue: 0.3)
                 )
             ),
             TutorialStep(
                 targetKey: "plusButton",
-                title: "Sharp Corners & No Shadow",
-                description: "This tooltip has zero corner radius (sharp corners) and no shadow!",
+                title: "Custom Arrow Style",
+                description: "Notice the thick orange arrow with larger arrowhead? Arrows are fully customizable: color, width, arrowhead size and angle!",
                 highlightShape: .circle,
                 tooltipPosition: .top(offset: 20),
                 showArrow: true,
-                tooltipStyle: TooltipStyle(
-                    backgroundColor: Color(red: 0.9, green: 1.0, blue: 0.9),
-                    cornerRadius: 0,
-                    shadowColor: .clear,
-                    shadowOpacity: 0,
-                    shadowRadius: 0,
-                    shadowX: 0,
-                    shadowY: 0
+                arrowStyle: ArrowStyle(
+                    color: Color(red: 0.9, green: 0.5, blue: 0.2),
+                    lineWidth: 5,
+                    arrowheadLength: 15,
+                    arrowheadAngle: 40,
+                    animationDuration: 1.0
                 )
             ),
             TutorialStep(
                 targetKey: "minusButton",
-                title: "Custom Blur/Dim",
-                description: "This step has a custom blue dim overlay with low opacity instead of the default black!",
+                title: "Curved Arrow",
+                description: "The curve intensity can be adjusted! This arrow has 2x curve intensity for a dramatic swoosh effect.",
                 highlightShape: .circle,
                 tooltipPosition: .top(offset: 20),
                 showArrow: true,
-                blurStyle: BlurStyle(
-                    dimColor: .blue,
-                    dimOpacity: 0.3
+                arrowStyle: ArrowStyle(
+                    color: Color(red: 0.4, green: 0.6, blue: 0.5),
+                    lineWidth: 4,
+                    animationDuration: 0.4,
+                    curveIntensity: 2.0
                 )
             ),
             TutorialStep(
                 targetKey: "notificationBell",
-                title: "Red Dim Overlay",
-                description: "Each step can have its own blur style. This one uses a red tint!",
+                title: "No Animation Arrow",
+                description: "Arrows can have animation disabled for a static appearance. This green arrow stays solid.",
                 highlightShape: .circle,
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true,
                 blurStyle: BlurStyle(
-                    dimColor: .red,
-                    dimOpacity: 0.4
+                    dimColor: Color(red: 0.5, green: 0.6, blue: 0.4),
+                    dimOpacity: 0.3
+                ),
+                arrowStyle: ArrowStyle(
+                    color: Color(red: 0.5, green: 0.7, blue: 0.4),
+                    lineWidth: 3,
+                    animationEnabled: false
                 )
             ),
             TutorialStep(
                 targetKey: "imageGallery",
-                title: "Back to Global Defaults",
-                description: "This step doesn't specify custom styling, so it uses the global defaults (blue tooltip from the flow settings).",
+                title: "Custom Padding & Spacing",
+                description: "Even internal tooltip spacing and padding is customizable! This tooltip has extra padding and spacing for a more spacious feel.",
                 highlightShape: .roundedRect(cornerRadius: 12),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    backgroundColor: Color(red: 0.92, green: 0.88, blue: 0.82),
+                    cornerRadius: 16,
+                    padding: 24,
+                    spacing: 16
+                )
+            ),
+            TutorialStep(
+                targetKey: "settingsTitle",
+                title: "Back to Global Defaults",
+                description: "This step uses the flow's default styling - warm earth tones with custom serif fonts throughout.",
+                highlightShape: .rectangle(cornerRadius: 8),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true
             )
@@ -414,18 +437,117 @@ struct TutorialFlows {
                 print("⏭️ Customization demo skipped!")
             },
             defaultTooltipStyle: TooltipStyle(
-                backgroundColor: Color(red: 0.85, green: 0.95, blue: 1.0),
-                cornerRadius: 20,
-                shadowColor: .blue,
-                shadowOpacity: 0.3,
-                shadowRadius: 12,
+                backgroundColor: Color(red: 0.95, green: 0.92, blue: 0.88),
+                cornerRadius: 16,
+                shadowColor: Color(red: 0.6, green: 0.5, blue: 0.4),
+                shadowOpacity: 0.25,
+                shadowRadius: 10,
                 shadowX: 0,
-                shadowY: 8
+                shadowY: 6,
+                titleFont: .system(.headline, design: .serif),
+                titleColor: Color(red: 0.5, green: 0.4, blue: 0.3),
+                descriptionFont: .system(.body, design: .serif),
+                descriptionColor: Color(red: 0.6, green: 0.5, blue: 0.4)
             ),
             defaultBlurStyle: BlurStyle(
-                dimColor: .black,
-                dimOpacity: 0.75
+                dimColor: Color(red: 0.4, green: 0.3, blue: 0.2),
+                dimOpacity: 0.6
+            ),
+            defaultArrowStyle: ArrowStyle(
+                color: Color(red: 0.7, green: 0.5, blue: 0.3),
+                lineWidth: 3,
+                arrowheadLength: 12,
+                animationDuration: 0.7
             )
+        )
+
+        coordinator.startFlow(flow)
+    }
+
+    // MARK: - Accessibility Demo
+    static func accessibilityDemo(coordinator: TutorialCoordinator) {
+        let steps = [
+            TutorialStep(
+                targetKey: "header",
+                title: "Accessibility Features",
+                description: "This tutorial demonstrates the accessibility features built into GuidedTutorial. Try using VoiceOver, Dynamic Type, or Reduce Motion to see them in action!",
+                highlightShape: .roundedRect(cornerRadius: 15),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "counter",
+                title: "VoiceOver Support",
+                description: "All tooltips have proper accessibility labels and hints. Enable VoiceOver (triple-click home/side button) to hear the tutorial content read aloud.",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "plusButton",
+                title: "Dynamic Type Support",
+                description: "Go to Settings > Accessibility > Display & Text Size > Larger Text to test. The tooltips will automatically resize to accommodate larger text sizes!",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "minusButton",
+                title: "Reduced Motion",
+                description: "Enable Settings > Accessibility > Motion > Reduce Motion. The arrow animations will be disabled, and step transitions will be instant instead of animated.",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "notificationBell",
+                title: "Color Contrast Validation",
+                description: "The framework includes built-in WCAG color contrast validation helpers to ensure your tooltips are readable for users with visual impairments.",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: false,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                                Text("WCAG AA Compliant")
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                            }
+                            Text("Use TooltipStyle.validateAccessibility() to check")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    )
+                },
+                tooltipStyle: TooltipStyle(
+                    backgroundColor: Color(red: 0.95, green: 0.95, blue: 0.95),
+                    cornerRadius: 12
+                )
+            ),
+            TutorialStep(
+                targetKey: "imageGallery",
+                title: "Accessible by Default",
+                description: "All accessibility features work automatically - no extra code needed! The framework handles VoiceOver, Dynamic Type, and Reduced Motion out of the box.",
+                highlightShape: .roundedRect(cornerRadius: 12),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            )
+        ]
+
+        let flow = TutorialFlow(
+            name: "Accessibility Demo",
+            steps: steps,
+            canBeSkipped: true,
+            skipGesture: .swipeDown,
+            onComplete: {
+                print("✅ Accessibility demo completed!")
+            },
+            onSkip: {
+                print("⏭️ Accessibility demo skipped!")
+            }
         )
 
         coordinator.startFlow(flow)

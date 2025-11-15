@@ -29,12 +29,12 @@ struct HeaderSection: View {
             Button(action: {}) {
                 Image(systemName: "bell.fill")
                     .font(.title2)
-                    .foregroundColor(.orange)
+                    .foregroundColor(Color(red: 0.7, green: 0.5, blue: 0.3))
             }
             .tutorialTarget("notificationBell", coordinator: coordinator)
         }
         .padding()
-        .background(Color.blue.opacity(0.1))
+        .background(Color(red: 0.95, green: 0.92, blue: 0.88))
         .cornerRadius(15)
         .tutorialTarget("header", coordinator: coordinator)
         .id("header")

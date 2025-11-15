@@ -33,7 +33,7 @@ struct ProfileSection: View {
                 .tutorialTarget("saveButton", coordinator: coordinator)
         }
         .padding()
-        .background(Color.pink.opacity(0.1))
+        .background(Color(red: 0.90, green: 0.85, blue: 0.78))
         .cornerRadius(15)
         .id("profile")
     }

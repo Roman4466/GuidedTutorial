@@ -15,6 +15,7 @@ struct TutorialControlsSection: View {
     let onStartFeatureShowcase: () -> Void
     let onStartGalleryTutorial: () -> Void
     let onStartCustomizationDemo: () -> Void
+    let onStartAccessibilityDemo: () -> Void
 
     var body: some View {
         VStack(spacing: 12) {
@@ -40,23 +41,29 @@ struct TutorialControlsSection: View {
                     onStartFeatureShowcase()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.purple)
+                .tint(.gray)
                 .tutorialTarget("showcaseButton", coordinator: coordinator)
 
                 Button("Gallery Tour") {
                     onStartGalleryTutorial()
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.green)
+                .buttonStyle(.bordered)
                 .tutorialTarget("galleryTourButton", coordinator: coordinator)
             }
 
-            Button("Customization Demo") {
-                onStartCustomizationDemo()
+            HStack(spacing: 15) {
+                Button("Customization Demo") {
+                    onStartCustomizationDemo()
+                }
+                .buttonStyle(.bordered)
+                .tutorialTarget("customizationButton", coordinator: coordinator)
+
+                Button("Accessibility Demo") {
+                    onStartAccessibilityDemo()
+                }
+                .buttonStyle(.bordered)
+                .tutorialTarget("accessibilityButton", coordinator: coordinator)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.orange)
-            .tutorialTarget("customizationButton", coordinator: coordinator)
         }
         .padding()
     }

@@ -16,98 +16,134 @@ struct TooltipView: View {
     let tooltipStyle: TooltipStyle
 
     @State private var tooltipSize: CGSize = .zero
+    @Environment(\.sizeCategory) var sizeCategory
 
     private var calculatedPosition: CGPoint {
         calculatePosition(tooltipSize: tooltipSize)
     }
 
+    // Adjust max width based on accessibility text size
+    private var maxTooltipWidth: CGFloat {
+        switch sizeCategory {
+        case .accessibilityMedium, .accessibilityLarge:
+            return 400
+        case .accessibilityExtraLarge, .accessibilityExtraExtraLarge, .accessibilityExtraExtraExtraLarge:
+            return 480
+        default:
+            return 320
+        }
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        tooltipContent
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("\(step.title). \(step.description)")
+            .accessibilityHint("Tutorial step. Use Next button to continue or Skip button to exit.")
+            .padding(tooltipStyle.padding)
+            .background(tooltipBackground)
+            .frame(maxWidth: tooltipStyle.maxWidth ?? min(screenSize.width - (tooltipStyle.padding * 2), maxTooltipWidth))
+            .overlay(
+                GeometryReader { geo in
+                    Color.clear.preference(key: SizePreferenceKey.self, value: geo.size)
+                }
+            )
+            .onPreferenceChange(SizePreferenceKey.self) { size in
+                tooltipSize = size
+            }
+            .position(calculatedPosition)
+    }
+
+    private var tooltipContent: some View {
+        VStack(alignment: .leading, spacing: tooltipStyle.spacing) {
             Text(step.title)
-                .font(.headline)
-                .foregroundColor(.primary)
+                .font(tooltipStyle.titleFont)
+                .foregroundColor(tooltipStyle.titleColor)
+                .accessibilityAddTraits(.isHeader)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(step.description)
-                .font(.body)
-                .foregroundColor(.secondary)
+                .font(tooltipStyle.descriptionFont)
+                .foregroundColor(tooltipStyle.descriptionColor)
+                .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let customContent = step.customContent {
                 customContent()
             }
 
-            HStack {
-                if onSkip != nil {
-                    Button("Skip") {
-                        onSkip?()
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundColor(.secondary)
-                }
-
-                Spacer()
-
-                Button("Next") {
-                    onNext()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+            actionButtons
         }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: tooltipStyle.cornerRadius)
-                .fill(tooltipStyle.backgroundColor)
-                .shadow(
-                    color: tooltipStyle.shadowColor.opacity(tooltipStyle.shadowOpacity),
-                    radius: tooltipStyle.shadowRadius,
-                    x: tooltipStyle.shadowX,
-                    y: tooltipStyle.shadowY
-                )
-        )
-        .frame(maxWidth: tooltipStyle.maxWidth ?? min(screenSize.width - 32, 320))
-        .overlay(
-            GeometryReader { geo in
-                Color.clear.preference(key: SizePreferenceKey.self, value: geo.size)
+    }
+
+    private var actionButtons: some View {
+        HStack {
+            if onSkip != nil {
+                Button("Skip") {
+                    onSkip?()
+                }
+                .buttonStyle(.plain)
+                .font(tooltipStyle.buttonFont)
+                .foregroundColor(.secondary)
+                .accessibilityLabel("Skip tutorial")
+                .accessibilityHint("Exits the current tutorial")
             }
-        )
-        .onPreferenceChange(SizePreferenceKey.self) { size in
-            tooltipSize = size
+
+            Spacer()
+
+            Button("Next") {
+                onNext()
+            }
+            .font(tooltipStyle.buttonFont)
+            .buttonStyle(.borderedProminent)
+            .accessibilityLabel("Next step")
+            .accessibilityHint("Continues to the next tutorial step")
         }
-        .position(calculatedPosition)
+    }
+
+    private var tooltipBackground: some View {
+        RoundedRectangle(cornerRadius: tooltipStyle.cornerRadius)
+            .fill(tooltipStyle.backgroundColor)
+            .shadow(
+                color: tooltipStyle.shadowColor.opacity(tooltipStyle.shadowOpacity),
+                radius: tooltipStyle.shadowRadius,
+                x: tooltipStyle.shadowX,
+                y: tooltipStyle.shadowY
+            )
     }
 
     private func calculatePosition(tooltipSize: CGSize) -> CGPoint {
-        let defaultMaxWidth = tooltipStyle.maxWidth ?? min(screenSize.width - 32, 320)
+        let defaultMaxWidth = tooltipStyle.maxWidth ?? min(screenSize.width - (tooltipStyle.padding * 2), maxTooltipWidth)
         let tooltipWidth = tooltipSize.width == 0 ? defaultMaxWidth : tooltipSize.width
         let tooltipHeight = tooltipSize.height == 0 ? 200 : tooltipSize.height
-        let padding: CGFloat = 16
+        let edgePadding = tooltipStyle.padding
 
         switch step.tooltipPosition {
         case .top(let offset):
             let yPos = targetFrame.minY - offset - tooltipHeight / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX)),
-                y: max(tooltipHeight / 2 + padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, targetFrame.midX)),
+                y: max(tooltipHeight / 2 + edgePadding, yPos)
             )
 
         case .bottom(let offset):
             let yPos = targetFrame.maxY + offset + tooltipHeight / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, targetFrame.midX)),
-                y: min(screenSize.height - tooltipHeight / 2 - padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, targetFrame.midX)),
+                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
             )
 
         case .leading(let offset):
             let xPos = targetFrame.minX - offset - tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, xPos),
+                x: max(tooltipWidth / 2 + edgePadding, xPos),
                 y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
             )
 
         case .trailing(let offset):
             let xPos = targetFrame.maxX + offset + tooltipWidth / 2
             return CGPoint(
-                x: min(screenSize.width - tooltipWidth / 2 - padding, xPos),
+                x: min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos),
                 y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
             )
 
@@ -116,8 +152,8 @@ struct TooltipView: View {
             // Position tooltip with its top-right corner near target's top-left
             let xPos = targetFrame.minX - offset - tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
-                y: max(tooltipHeight / 2 + padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
+                y: max(tooltipHeight / 2 + edgePadding, yPos)
             )
 
         case .topTrailing(let offset):
@@ -125,8 +161,8 @@ struct TooltipView: View {
             // Position tooltip with its top-left corner near target's top-right
             let xPos = targetFrame.maxX + offset + tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
-                y: max(tooltipHeight / 2 + padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
+                y: max(tooltipHeight / 2 + edgePadding, yPos)
             )
 
         case .bottomLeading(let offset):
@@ -134,8 +170,8 @@ struct TooltipView: View {
             // Position tooltip with its bottom-right corner near target's bottom-left
             let xPos = targetFrame.minX - offset - tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
-                y: min(screenSize.height - tooltipHeight / 2 - padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
+                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
             )
 
         case .bottomTrailing(let offset):
@@ -143,19 +179,20 @@ struct TooltipView: View {
             // Position tooltip with its bottom-left corner near target's bottom-right
             let xPos = targetFrame.maxX + offset + tooltipWidth / 2
             return CGPoint(
-                x: max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, xPos)),
-                y: min(screenSize.height - tooltipHeight / 2 - padding, yPos)
+                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
+                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
             )
 
         case .center:
             return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
 
         case .automatic:
-            return calculateAutomaticPosition(tooltipWidth: tooltipWidth, tooltipHeight: tooltipHeight, padding: padding)
+            return calculateAutomaticPosition(tooltipWidth: tooltipWidth, tooltipHeight: tooltipHeight, padding: edgePadding)
         }
     }
 
-    private func calculateAutomaticPosition(tooltipWidth: CGFloat, tooltipHeight: CGFloat, padding: CGFloat) -> CGPoint {
+    private func calculateAutomaticPosition(tooltipWidth: CGFloat, tooltipHeight: CGFloat, padding ignored: CGFloat) -> CGPoint {
+        let padding = tooltipStyle.padding
         let spaceAbove = targetFrame.minY
         let spaceBelow = screenSize.height - targetFrame.maxY
         let spaceLeft = targetFrame.minX
@@ -194,13 +231,11 @@ struct TooltipView: View {
     }
 
     private func clampX(_ x: CGFloat, tooltipWidth: CGFloat) -> CGFloat {
-        let padding: CGFloat = 16
-        return max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, x))
+        return max(tooltipWidth / 2 + tooltipStyle.padding, min(screenSize.width - tooltipWidth / 2 - tooltipStyle.padding, x))
     }
 
     private func clampY(_ y: CGFloat, tooltipHeight: CGFloat) -> CGFloat {
-        let padding: CGFloat = 16
-        return max(tooltipHeight / 2 + padding, min(screenSize.height - tooltipHeight / 2 - padding, y))
+        return max(tooltipHeight / 2 + tooltipStyle.padding, min(screenSize.height - tooltipHeight / 2 - tooltipStyle.padding, y))
     }
 }
 

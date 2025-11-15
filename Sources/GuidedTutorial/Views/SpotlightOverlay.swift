@@ -29,6 +29,7 @@ struct SpotlightOverlay: View {
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
             .allowsHitTesting(false)
+            .accessibilityHidden(true)
         }
     }
 
