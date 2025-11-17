@@ -23,6 +23,7 @@ public struct TooltipStyle: Sendable {
     public let buttonFont: Font
     public let padding: CGFloat
     public let spacing: CGFloat
+    public let buttonStyle: TooltipButtonStyle
 
     public init(
         backgroundColor: Color = .white,
@@ -39,7 +40,8 @@ public struct TooltipStyle: Sendable {
         descriptionColor: Color = .secondary,
         buttonFont: Font = .body,
         padding: CGFloat = 16,
-        spacing: CGFloat = 12
+        spacing: CGFloat = 12,
+        buttonStyle: TooltipButtonStyle = .default
     ) {
         self.backgroundColor = backgroundColor
         self.cornerRadius = cornerRadius
@@ -56,6 +58,7 @@ public struct TooltipStyle: Sendable {
         self.buttonFont = buttonFont
         self.padding = padding
         self.spacing = spacing
+        self.buttonStyle = buttonStyle
     }
 
     public static let `default` = TooltipStyle()

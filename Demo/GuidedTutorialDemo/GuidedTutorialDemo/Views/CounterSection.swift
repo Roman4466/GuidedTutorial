@@ -43,6 +43,5 @@ struct CounterSection: View {
         .padding()
         .background(Color(red: 0.88, green: 0.90, blue: 0.82))
         .cornerRadius(15)
-        .id("counter")
     }
 }

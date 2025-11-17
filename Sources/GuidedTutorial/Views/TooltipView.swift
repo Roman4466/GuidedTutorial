@@ -19,7 +19,17 @@ struct TooltipView: View {
     @Environment(\.sizeCategory) var sizeCategory
 
     private var calculatedPosition: CGPoint {
-        calculatePosition(tooltipSize: tooltipSize)
+        let defaultMaxWidth = tooltipStyle.maxWidth ?? min(screenSize.width - (tooltipStyle.padding * 2), maxTooltipWidth)
+        let width = tooltipSize.width == 0 ? defaultMaxWidth : tooltipSize.width
+        let height = tooltipSize.height == 0 ? 200 : tooltipSize.height
+
+        return TooltipPositionCalculator.calculatePosition(
+            tooltipPosition: step.tooltipPosition,
+            targetFrame: targetFrame,
+            screenSize: screenSize,
+            tooltipSize: CGSize(width: width, height: height),
+            tooltipStyle: tooltipStyle
+        )
     }
 
     // Adjust max width based on accessibility text size
@@ -77,28 +87,92 @@ struct TooltipView: View {
     }
 
     private var actionButtons: some View {
-        HStack {
-            if onSkip != nil {
-                Button("Skip") {
-                    onSkip?()
-                }
-                .buttonStyle(.plain)
-                .font(tooltipStyle.buttonFont)
-                .foregroundColor(.secondary)
-                .accessibilityLabel("Skip tutorial")
-                .accessibilityHint("Exits the current tutorial")
+        Group {
+            if let customButtons = tooltipStyle.buttonStyle.customButtons, !customButtons.isEmpty {
+                customButtonsView(customButtons)
+            } else {
+                defaultButtonsView
             }
-
-            Spacer()
-
-            Button("Next") {
-                onNext()
-            }
-            .font(tooltipStyle.buttonFont)
-            .buttonStyle(.borderedProminent)
-            .accessibilityLabel("Next step")
-            .accessibilityHint("Continues to the next tutorial step")
         }
+    }
+
+    @ViewBuilder
+    private func customButtonsView(_ buttons: [CustomButton]) -> some View {
+        switch tooltipStyle.buttonStyle.buttonLayout {
+        case .horizontal:
+            HStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                ForEach(buttons) { button in
+                    createButton(button)
+                }
+            }
+        case .vertical:
+            VStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                ForEach(buttons) { button in
+                    createButton(button)
+                }
+            }
+        case .custom:
+            HStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                ForEach(buttons) { button in
+                    createButton(button)
+                }
+            }
+        }
+    }
+
+    private var defaultButtonsView: some View {
+        Group {
+            switch tooltipStyle.buttonStyle.buttonLayout {
+            case .horizontal:
+                HStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                    defaultButtons
+                }
+            case .vertical:
+                VStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                    defaultButtons
+                }
+            case .custom:
+                HStack(spacing: tooltipStyle.buttonStyle.buttonSpacing) {
+                    defaultButtons
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var defaultButtons: some View {
+        if onSkip != nil {
+            Button(tooltipStyle.buttonStyle.skipButtonText) {
+                onSkip?()
+            }
+            .applyButtonStyle(tooltipStyle.buttonStyle.skipButtonStyle)
+            .font(tooltipStyle.buttonFont)
+            .applyButtonColor(tooltipStyle.buttonStyle.skipButtonColor)
+            .accessibilityLabel("Skip tutorial")
+            .accessibilityHint("Exits the current tutorial")
+        }
+
+        if tooltipStyle.buttonStyle.buttonLayout == .horizontal {
+            Spacer()
+        }
+
+        Button(tooltipStyle.buttonStyle.nextButtonText) {
+            onNext()
+        }
+        .font(tooltipStyle.buttonFont)
+        .applyButtonStyle(tooltipStyle.buttonStyle.nextButtonStyle)
+        .applyButtonColor(tooltipStyle.buttonStyle.nextButtonColor)
+        .accessibilityLabel("Next step")
+        .accessibilityHint("Continues to the next tutorial step")
+    }
+
+    private func createButton(_ button: CustomButton) -> some View {
+        Button(button.text) {
+            button.action()
+        }
+        .font(tooltipStyle.buttonFont)
+        .applyButtonStyle(button.style)
+        .applyButtonColor(button.color)
     }
 
     private var tooltipBackground: some View {
@@ -111,132 +185,6 @@ struct TooltipView: View {
                 y: tooltipStyle.shadowY
             )
     }
-
-    private func calculatePosition(tooltipSize: CGSize) -> CGPoint {
-        let defaultMaxWidth = tooltipStyle.maxWidth ?? min(screenSize.width - (tooltipStyle.padding * 2), maxTooltipWidth)
-        let tooltipWidth = tooltipSize.width == 0 ? defaultMaxWidth : tooltipSize.width
-        let tooltipHeight = tooltipSize.height == 0 ? 200 : tooltipSize.height
-        let edgePadding = tooltipStyle.padding
-
-        switch step.tooltipPosition {
-        case .top(let offset):
-            let yPos = targetFrame.minY - offset - tooltipHeight / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, targetFrame.midX)),
-                y: max(tooltipHeight / 2 + edgePadding, yPos)
-            )
-
-        case .bottom(let offset):
-            let yPos = targetFrame.maxY + offset + tooltipHeight / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, targetFrame.midX)),
-                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
-            )
-
-        case .leading(let offset):
-            let xPos = targetFrame.minX - offset - tooltipWidth / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, xPos),
-                y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
-            )
-
-        case .trailing(let offset):
-            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
-            return CGPoint(
-                x: min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos),
-                y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
-            )
-
-        case .topLeading(let offset):
-            let yPos = targetFrame.minY - offset - tooltipHeight / 2
-            // Position tooltip with its top-right corner near target's top-left
-            let xPos = targetFrame.minX - offset - tooltipWidth / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
-                y: max(tooltipHeight / 2 + edgePadding, yPos)
-            )
-
-        case .topTrailing(let offset):
-            let yPos = targetFrame.minY - offset - tooltipHeight / 2
-            // Position tooltip with its top-left corner near target's top-right
-            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
-                y: max(tooltipHeight / 2 + edgePadding, yPos)
-            )
-
-        case .bottomLeading(let offset):
-            let yPos = targetFrame.maxY + offset + tooltipHeight / 2
-            // Position tooltip with its bottom-right corner near target's bottom-left
-            let xPos = targetFrame.minX - offset - tooltipWidth / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
-                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
-            )
-
-        case .bottomTrailing(let offset):
-            let yPos = targetFrame.maxY + offset + tooltipHeight / 2
-            // Position tooltip with its bottom-left corner near target's bottom-right
-            let xPos = targetFrame.maxX + offset + tooltipWidth / 2
-            return CGPoint(
-                x: max(tooltipWidth / 2 + edgePadding, min(screenSize.width - tooltipWidth / 2 - edgePadding, xPos)),
-                y: min(screenSize.height - tooltipHeight / 2 - edgePadding, yPos)
-            )
-
-        case .center:
-            return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
-
-        case .automatic:
-            return calculateAutomaticPosition(tooltipWidth: tooltipWidth, tooltipHeight: tooltipHeight, padding: edgePadding)
-        }
-    }
-
-    private func calculateAutomaticPosition(tooltipWidth: CGFloat, tooltipHeight: CGFloat, padding ignored: CGFloat) -> CGPoint {
-        let padding = tooltipStyle.padding
-        let spaceAbove = targetFrame.minY
-        let spaceBelow = screenSize.height - targetFrame.maxY
-        let spaceLeft = targetFrame.minX
-        let spaceRight = screenSize.width - targetFrame.maxX
-
-        // Find the best position based on available space
-        let positions = [
-            (space: spaceBelow, position: CGPoint(
-                x: clampX(targetFrame.midX, tooltipWidth: tooltipWidth),
-                y: targetFrame.maxY + padding + tooltipHeight / 2
-            )),
-            (space: spaceAbove, position: CGPoint(
-                x: clampX(targetFrame.midX, tooltipWidth: tooltipWidth),
-                y: targetFrame.minY - padding - tooltipHeight / 2
-            )),
-            (space: spaceRight, position: CGPoint(
-                x: targetFrame.maxX + padding + tooltipWidth / 2,
-                y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
-            )),
-            (space: spaceLeft, position: CGPoint(
-                x: targetFrame.minX - padding - tooltipWidth / 2,
-                y: clampY(targetFrame.midY, tooltipHeight: tooltipHeight)
-            ))
-        ]
-
-        // Choose the position with the most space
-        if let bestPosition = positions.max(by: { $0.space < $1.space })?.position {
-            // Ensure the position is within screen bounds
-            let clampedX = max(tooltipWidth / 2 + padding, min(screenSize.width - tooltipWidth / 2 - padding, bestPosition.x))
-            let clampedY = max(tooltipHeight / 2 + padding, min(screenSize.height - tooltipHeight / 2 - padding, bestPosition.y))
-            return CGPoint(x: clampedX, y: clampedY)
-        }
-
-        // Fallback to center if no good position found
-        return CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
-    }
-
-    private func clampX(_ x: CGFloat, tooltipWidth: CGFloat) -> CGFloat {
-        return max(tooltipWidth / 2 + tooltipStyle.padding, min(screenSize.width - tooltipWidth / 2 - tooltipStyle.padding, x))
-    }
-
-    private func clampY(_ y: CGFloat, tooltipHeight: CGFloat) -> CGFloat {
-        return max(tooltipHeight / 2 + tooltipStyle.padding, min(screenSize.height - tooltipHeight / 2 - tooltipStyle.padding, y))
-    }
 }
 
 // Helper for measuring tooltip size
@@ -244,5 +192,29 @@ private struct SizePreferenceKey: PreferenceKey {
     static let defaultValue: CGSize = .zero
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
         value = nextValue()
+    }
+}
+
+// Helper view modifiers for button customization
+extension View {
+    @ViewBuilder
+    func applyButtonStyle(_ style: ButtonStyleType) -> some View {
+        switch style {
+        case .plain:
+            self.buttonStyle(.plain)
+        case .bordered:
+            self.buttonStyle(.bordered)
+        case .borderedProminent:
+            self.buttonStyle(.borderedProminent)
+        }
+    }
+
+    @ViewBuilder
+    func applyButtonColor(_ color: Color?) -> some View {
+        if let color = color {
+            self.tint(color)
+        } else {
+            self
+        }
     }
 }

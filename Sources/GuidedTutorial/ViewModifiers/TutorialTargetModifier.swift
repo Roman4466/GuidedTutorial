@@ -19,6 +19,7 @@ public struct TutorialTargetModifier: ViewModifier {
                     coordinator.registerTargetFrame(key: targetKey, frame: frame)
                 }
             }
+            .id(targetKey)  // Automatically assign ID for ScrollViewProxy.scrollTo()
     }
 }
 

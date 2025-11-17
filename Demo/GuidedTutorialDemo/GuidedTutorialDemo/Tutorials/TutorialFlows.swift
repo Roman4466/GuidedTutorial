@@ -9,6 +9,19 @@ import Foundation
 import GuidedTutorial
 import SwiftUI
 
+// Custom shape for demonstration
+struct Diamond: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+        path.closeSubpath()
+        return path
+    }
+}
+
 struct TutorialFlows {
 
     // MARK: - Basic Tutorial
@@ -16,11 +29,24 @@ struct TutorialFlows {
         let steps = [
             TutorialStep(
                 targetKey: "header",
-                title: "Welcome! 👋",
+                title: "Welcome! ",
                 description: "This is the main header of the app. It shows your welcome message and quick access to notifications.",
                 highlightShape: .roundedRect(cornerRadius: 15),
                 tooltipPosition: .bottom(offset: 20),
-                showArrow: true
+                showArrow: true,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "hand.draw")
+                                    .foregroundColor(.blue)
+                                Text("Swipe down anywhere to skip this tutorial")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    )
+                }
             ),
             TutorialStep(
                 targetKey: "notificationBell",
@@ -60,10 +86,10 @@ struct TutorialFlows {
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print("✅ Basic tutorial completed!")
+                print(" Basic tutorial completed!")
             },
             onSkip: {
-                print("⏭️ Basic tutorial skipped!")
+                print(" Basic tutorial skipped!")
             }
         )
 
@@ -75,8 +101,8 @@ struct TutorialFlows {
         let steps = [
             TutorialStep(
                 targetKey: "imageGallery",
-                title: "Image Gallery",
-                description: "Swipe through the gallery to view different media types. This demonstrates horizontal scrolling content.",
+                title: "Advanced Actions & Gestures",
+                description: "This tutorial demonstrates different action types AND skip gestures. Press and hold anywhere for 2 seconds to skip the entire tutorial!",
                 highlightShape: .roundedRect(cornerRadius: 12),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true,
@@ -84,9 +110,32 @@ struct TutorialFlows {
                     AnyView(
                         VStack(spacing: 8) {
                             HStack(spacing: 5) {
+                                Image(systemName: "hand.press.fill")
+                                    .foregroundColor(.orange)
+                                Text("Long press to skip (new skip gesture!)")
+                                    .font(.caption)
+                                    .foregroundColor(.orange)
+                            }
+                        }
+                    )
+                }
+            ),
+            TutorialStep(
+                targetKey: "imageGallery",
+                title: "Image Gallery (Swipe Action)",
+                description: "This step uses a SWIPE RIGHT action type. Try swiping right on the gallery to advance!",
+                highlightShape: .roundedRect(cornerRadius: 12),
+                actionType: .swipe(direction: .right),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                blockOtherInteractions: false,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            HStack(spacing: 5) {
                                 Image(systemName: "hand.point.left.fill")
                                     .foregroundColor(.blue)
-                                Text("Swipe to explore")
+                                Text(" Swipe RIGHT on the gallery")
                                     .font(.caption)
                                     .foregroundColor(.blue)
                             }
@@ -104,17 +153,43 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "notificationsToggle",
-                title: "Notifications Toggle",
-                description: "Enable or disable push notifications. Changes take effect immediately.",
+                title: "Notifications Toggle (Double Tap)",
+                description: "This step uses DOUBLE TAP action. Double tap anywhere to continue!",
                 highlightShape: .roundedRect(cornerRadius: 8),
-                tooltipPosition: .top(offset: 15)
+                actionType: .doubleTap,
+                tooltipPosition: .top(offset: 15),
+                blockOtherInteractions: false,
+                customContent: {
+                    AnyView(
+                        HStack(spacing: 5) {
+                            Image(systemName: "hand.tap.fill")
+                                .foregroundColor(.purple)
+                            Text(" Double tap anywhere")
+                                .font(.caption)
+                                .foregroundColor(.purple)
+                        }
+                    )
+                }
             ),
             TutorialStep(
                 targetKey: "darkModeToggle",
-                title: "Dark Mode",
-                description: "Switch between light and dark themes for comfortable viewing.",
+                title: "Dark Mode (Long Press)",
+                description: "This step demonstrates LONG PRESS action. Press and hold anywhere for 1 second to advance.",
                 highlightShape: .roundedRect(cornerRadius: 8),
-                tooltipPosition: .topTrailing(offset: 15)
+                actionType: .longPress(duration: 1.0),
+                tooltipPosition: .topTrailing(offset: 15),
+                blockOtherInteractions: false,
+                customContent: {
+                    AnyView(
+                        HStack(spacing: 5) {
+                            Image(systemName: "hand.press.fill")
+                                .foregroundColor(.green)
+                            Text("Press and hold for 1 second")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                        }
+                    )
+                }
             ),
             TutorialStep(
                 targetKey: "usernameField",
@@ -137,12 +212,12 @@ struct TutorialFlows {
             name: "Advanced Tour",
             steps: steps,
             canBeSkipped: true,
-            skipGesture: .swipeUp,
+            skipGesture: .longPress,
             onComplete: {
-                print("✅ Advanced tutorial completed!")
+                print(" Advanced tutorial completed!")
             },
             onSkip: {
-                print("⏭️ Advanced tutorial skipped!")
+                print(" Advanced tutorial skipped!")
             }
         )
 
@@ -154,11 +229,22 @@ struct TutorialFlows {
         let steps = [
             TutorialStep(
                 targetKey: "welcomeText",
-                title: "Bottom-Right Position",
-                description: "Tooltips can be positioned at the bottom-right corner of any element.",
+                title: "Skip Gesture: Double Tap",
+                description: "This tutorial uses DOUBLE TAP to skip. Try double-tapping anywhere on the screen to exit the tutorial!",
                 highlightShape: .rectangle(cornerRadius: 8),
                 tooltipPosition: .bottomTrailing(offset: 20),
-                showArrow: true
+                showArrow: true,
+                customContent: {
+                    AnyView(
+                        HStack(spacing: 5) {
+                            Image(systemName: "hand.tap.fill")
+                                .foregroundColor(.orange)
+                            Text(" Double tap to skip tutorial")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                        }
+                    )
+                }
             ),
             TutorialStep(
                 targetKey: "galleryTitle",
@@ -170,10 +256,18 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "settingsIcon",
-                title: "Automatic Positioning",
-                description: "The tooltip automatically finds the best position based on available space. It will never overlap the highlighted element!",
+                title: "Leading Position",
+                description: "This tooltip is positioned to the LEFT (leading side) of the element. Great for right-aligned UI elements!",
                 highlightShape: .circle,
-                tooltipPosition: .automatic,
+                tooltipPosition: .leading(offset: 15),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "notificationBell",
+                title: "Trailing Position",
+                description: "This tooltip is positioned to the RIGHT (trailing side). Perfect for left-aligned elements!",
+                highlightShape: .circle,
+                tooltipPosition: .trailing(offset: 15),
                 showArrow: true
             ),
             TutorialStep(
@@ -212,15 +306,28 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "basicTourButton",
-                title: "Circle Highlight",
-                description: "Different highlight shapes are available: circle, rectangle, and rounded rectangle.",
+                title: "Center Position Announcement",
+                description: "CENTER position is great for important announcements that don't target specific elements. No arrow needed!",
                 highlightShape: .circle,
-                tooltipPosition: .top(offset: 20),
-                showArrow: true
+                tooltipPosition: .center,
+                showArrow: false,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 10) {
+                            Image(systemName: "megaphone.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(.orange)
+                            Text("Full-Screen Message")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundColor(.orange)
+                        }
+                    )
+                }
             ),
             TutorialStep(
                 targetKey: "showcaseButton",
-                title: "Tutorial Complete! 🎉",
+                title: "Tutorial Complete! ",
                 description: "You've seen all the major features: different positions, shapes, arrows, and custom content. Try the other tutorials to see more!",
                 highlightShape: .roundedRect(cornerRadius: 8),
                 tooltipPosition: .top(offset: 20),
@@ -228,7 +335,7 @@ struct TutorialFlows {
                 customContent: {
                     AnyView(
                         VStack(spacing: 8) {
-                            Text("✨ Features Covered ✨")
+                            Text(" Features Covered ")
                                 .font(.caption)
                                 .fontWeight(.bold)
                             HStack(spacing: 15) {
@@ -250,10 +357,10 @@ struct TutorialFlows {
             canBeSkipped: true,
             skipGesture: .doubleTap,
             onComplete: {
-                print("✅ Feature showcase completed!")
+                print(" Feature showcase completed!")
             },
             onSkip: {
-                print("⏭️ Feature showcase skipped!")
+                print(" Feature showcase skipped!")
             }
         )
 
@@ -313,10 +420,10 @@ struct TutorialFlows {
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print("✅ Gallery tutorial completed!")
+                print(" Gallery tutorial completed!")
             },
             onSkip: {
-                print("⏭️ Gallery tutorial skipped!")
+                print(" Gallery tutorial skipped!")
             }
         )
 
@@ -417,6 +524,14 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "settingsTitle",
+                title: "Custom Diamond Shape",
+                description: "You can even use CUSTOM SHAPES! This uses a custom diamond/rhombus shape instead of rectangle or circle.",
+                highlightShape: .custom(path: { Diamond() }),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true
+            ),
+            TutorialStep(
+                targetKey: "usernameField",
                 title: "Back to Global Defaults",
                 description: "This step uses the flow's default styling - warm earth tones with custom serif fonts throughout.",
                 highlightShape: .rectangle(cornerRadius: 8),
@@ -431,10 +546,10 @@ struct TutorialFlows {
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print("✅ Customization demo completed!")
+                print(" Customization demo completed!")
             },
             onSkip: {
-                print("⏭️ Customization demo skipped!")
+                print(" Customization demo skipped!")
             },
             defaultTooltipStyle: TooltipStyle(
                 backgroundColor: Color(red: 0.95, green: 0.92, blue: 0.88),
@@ -458,6 +573,197 @@ struct TutorialFlows {
                 lineWidth: 3,
                 arrowheadLength: 12,
                 animationDuration: 0.7
+            )
+        )
+
+        coordinator.startFlow(flow)
+    }
+
+    // MARK: - Button Customization Demo
+    static func buttonCustomizationDemo(coordinator: TutorialCoordinator) {
+        let steps = [
+            TutorialStep(
+                targetKey: "header",
+                title: "Button Customization",
+                description: "This tutorial showcases the new button customization features! Notice the custom button text below.",
+                highlightShape: .roundedRect(cornerRadius: 15),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Continue →",
+                        skipButtonText: "Exit Tutorial"
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "counter",
+                title: "Custom Button Colors",
+                description: "Buttons can have custom colors! This step uses a green 'Next' button and a red 'Skip' button.",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Got it!",
+                        skipButtonText: "Cancel",
+                        nextButtonColor: .green,
+                        skipButtonColor: .red
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "plusButton",
+                title: "Vertical Button Layout",
+                description: "Buttons can be arranged vertically instead of horizontally. See how the buttons stack below?",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Next Step",
+                        skipButtonText: "Skip",
+                        buttonLayout: .vertical
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "minusButton",
+                title: "Custom Button Styles",
+                description: "Mix and match button styles! This step has a prominent 'Next' and a bordered 'Skip' button.",
+                highlightShape: .circle,
+                tooltipPosition: .top(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Proceed",
+                        skipButtonText: "Go Back",
+                        nextButtonColor: .purple,
+                        skipButtonColor: .orange,
+                        nextButtonStyle: .borderedProminent,
+                        skipButtonStyle: .bordered
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "imageGallery",
+                title: "Custom Button Spacing",
+                description: "Even button spacing is customizable! Notice the extra space between the buttons below.",
+                highlightShape: .roundedRect(cornerRadius: 12),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Continue",
+                        skipButtonText: "Exit",
+                        nextButtonColor: .blue,
+                        buttonSpacing: 24
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "settingsTitle",
+                title: "Custom Action Buttons!",
+                description: "You can add CUSTOM BUTTONS with their own actions! This step has 3 custom buttons instead of Next/Skip.",
+                highlightShape: .rectangle(cornerRadius: 8),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            Text(" Try the buttons below ")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                                .foregroundColor(.purple)
+                        }
+                    )
+                },
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        buttonLayout: .vertical,
+                        customButtons: [
+                            CustomButton(
+                                text: "Continue Tutorial",
+                                action: {
+                                    Task { @MainActor in
+                                        coordinator.nextStep()
+                                    }
+                                },
+                                color: .green,
+                                style: .borderedProminent
+                            ),
+                            CustomButton(
+                                text: "Learn More",
+                                action: { print(" Learn More tapped!") },
+                                color: .blue,
+                                style: .bordered
+                            ),
+                            CustomButton(
+                                text: "Skip Tutorial",
+                                action: {
+                                    Task { @MainActor in
+                                        coordinator.skipTutorial()
+                                    }
+                                },
+                                color: .red,
+                                style: .plain
+                            )
+                        ]
+                    )
+                )
+            ),
+            TutorialStep(
+                targetKey: "profileTitle",
+                title: "Mix & Match Everything!",
+                description: "You can customize button text, colors, styles, layout, spacing, and even add custom buttons. Mix any combination to match your app's design!",
+                highlightShape: .rectangle(cornerRadius: 8),
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: true,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            Text(" Button Options ")
+                                .font(.caption)
+                                .fontWeight(.bold)
+                            HStack(spacing: 12) {
+                                Label("Text", systemImage: "textformat")
+                                Label("Color", systemImage: "paintpalette")
+                                Label("Layout", systemImage: "square.split.2x1")
+                            }
+                            .font(.caption2)
+                        }
+                        .foregroundColor(.blue)
+                    )
+                },
+                tooltipStyle: TooltipStyle(
+                    buttonStyle: TooltipButtonStyle(
+                        nextButtonText: "Awesome!",
+                        skipButtonText: "Leave",
+                        nextButtonColor: .blue,
+                        skipButtonColor: .gray,
+                        nextButtonStyle: .borderedProminent,
+                        skipButtonStyle: .plain
+                    )
+                )
+            )
+        ]
+
+        let flow = TutorialFlow(
+            name: "Button Customization Demo",
+            steps: steps,
+            canBeSkipped: true,
+            skipGesture: .swipeDown,
+            onComplete: {
+                print(" Button customization demo completed!")
+            },
+            onSkip: {
+                print(" Button customization demo skipped!")
+            },
+            defaultTooltipStyle: TooltipStyle(
+                buttonStyle: TooltipButtonStyle(
+                    nextButtonText: "Next",
+                    skipButtonText: "Skip"
+                )
             )
         )
 
@@ -501,8 +807,8 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "notificationBell",
-                title: "Color Contrast Validation",
-                description: "The framework includes built-in WCAG color contrast validation helpers to ensure your tooltips are readable for users with visual impairments.",
+                title: "Automatic Validation ",
+                description: "The framework AUTOMATICALLY validates accessibility in DEBUG mode! Check your console for warnings. This tooltip has good contrast.",
                 highlightShape: .circle,
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: false,
@@ -516,14 +822,46 @@ struct TutorialFlows {
                                     .font(.caption)
                                     .fontWeight(.bold)
                             }
-                            Text("Use TooltipStyle.validateAccessibility() to check")
+                            Text("Ratio: 21:1 (Perfect!)")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
                     )
                 },
                 tooltipStyle: TooltipStyle(
-                    backgroundColor: Color(red: 0.95, green: 0.95, blue: 0.95),
+                    backgroundColor: .white,
+                    titleColor: .black,
+                    descriptionColor: .black,
+                    cornerRadius: 12
+                )
+            ),
+            TutorialStep(
+                targetKey: "counter",
+                title: "Low Contrast Warning ",
+                description: "This step intentionally uses poor contrast. In DEBUG builds, you'll see a warning in the console about this!",
+                highlightShape: .circle,
+                tooltipPosition: .bottom(offset: 20),
+                showArrow: false,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.orange)
+                                Text("Low Contrast Example")
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                            }
+                            Text("Check your console for the warning!")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    )
+                },
+                tooltipStyle: TooltipStyle(
+                    backgroundColor: Color(red: 1.0, green: 1.0, blue: 0.9),
+                    titleColor: Color(red: 1.0, green: 0.9, blue: 0.5),
+                    descriptionColor: Color(red: 1.0, green: 0.85, blue: 0.4),
                     cornerRadius: 12
                 )
             ),
@@ -543,10 +881,10 @@ struct TutorialFlows {
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print("✅ Accessibility demo completed!")
+                print(" Accessibility demo completed!")
             },
             onSkip: {
-                print("⏭️ Accessibility demo skipped!")
+                print(" Accessibility demo skipped!")
             }
         )
 

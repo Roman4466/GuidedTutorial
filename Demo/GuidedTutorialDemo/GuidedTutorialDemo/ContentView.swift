@@ -54,19 +54,14 @@ struct ContentView: View {
                             onStartFeatureShowcase: { TutorialFlows.featureShowcase(coordinator: coordinator) },
                             onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) },
                             onStartCustomizationDemo: { TutorialFlows.customizationDemo(coordinator: coordinator) },
+                            onStartButtonCustomizationDemo: { TutorialFlows.buttonCustomizationDemo(coordinator: coordinator) },
                             onStartAccessibilityDemo: { TutorialFlows.accessibilityDemo(coordinator: coordinator) }
                         )
                     }
                     .padding()
-                    .onChange(of: coordinator.currentStepIndex) { _ in
-                        ScrollHelper.scrollToCurrentTarget(coordinator: coordinator, scrollProxy: scrollProxy)
-                    }
-                    .onChange(of: coordinator.isPresented) { isPresented in
-                        if isPresented {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                ScrollHelper.scrollToCurrentTarget(coordinator: coordinator, scrollProxy: scrollProxy)
-                            }
-                        }
+                    .onAppear {
+                        // Register ScrollViewProxy for automatic scrolling
+                        coordinator.registerScrollProxy(scrollProxy)
                     }
                 }
                 .navigationTitle("Tutorial Demo")

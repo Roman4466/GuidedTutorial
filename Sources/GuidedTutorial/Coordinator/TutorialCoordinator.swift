@@ -19,6 +19,15 @@ public class TutorialCoordinator: ObservableObject {
     private var eventHandlers: [(TutorialEvent) -> Void] = []
     private var cancellables = Set<AnyCancellable>()
 
+    /// ScrollViewProxy for automatic scrolling to tutorial targets
+    private weak var scrollProxy: ScrollViewProxy?
+
+    /// Enables automatic scrolling to targets when they change
+    public var autoScrollEnabled: Bool = true
+
+    /// Duration for scroll animation
+    public var scrollAnimationDuration: Double = 0.5
+
     public init() {}
 
     // MARK: - Public Methods
@@ -33,6 +42,11 @@ public class TutorialCoordinator: ObservableObject {
 
         notifyEvent(.tutorialStarted)
         notifyEvent(.stepStarted(stepId: flow.steps[0].id))
+
+        // Scroll to first target with a small delay to allow view to render
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.scrollToCurrentTarget()
+        }
     }
 
     public func nextStep() {
@@ -48,6 +62,9 @@ public class TutorialCoordinator: ObservableObject {
         flowState = .inProgress(currentStepIndex: currentStepIndex)
 
         notifyEvent(.stepStarted(stepId: flow.steps[currentStepIndex].id))
+
+        // Auto-scroll to new target
+        scrollToCurrentTarget()
     }
 
     public func skipToStep(index: Int) {
@@ -99,6 +116,32 @@ public class TutorialCoordinator: ObservableObject {
 
     public func registerTargetFrame(key: String, frame: CGRect) {
         targetFrames[key] = frame
+    }
+
+    /// Registers a ScrollViewProxy for automatic scrolling
+    /// - Parameter proxy: The ScrollViewProxy from ScrollViewReader
+    public func registerScrollProxy(_ proxy: ScrollViewProxy) {
+        self.scrollProxy = proxy
+    }
+
+    /// Scrolls to the current tutorial target if auto-scroll is enabled
+    /// - Parameter animated: Whether to animate the scroll (default: true)
+    public func scrollToCurrentTarget(animated: Bool = true) {
+        guard autoScrollEnabled,
+              let scrollProxy = scrollProxy,
+              let currentStep = currentStep else {
+            return
+        }
+
+        let targetKey = currentStep.targetKey
+
+        if animated {
+            withAnimation(.easeInOut(duration: scrollAnimationDuration)) {
+                scrollProxy.scrollTo(targetKey, anchor: .center)
+            }
+        } else {
+            scrollProxy.scrollTo(targetKey, anchor: .center)
+        }
     }
 
     public func addEventHandler(_ handler: @escaping (TutorialEvent) -> Void) {
