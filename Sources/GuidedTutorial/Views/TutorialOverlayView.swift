@@ -24,6 +24,13 @@ struct TutorialOverlayView: View {
                         }
                     }
 
+                    // Handle ActionType gestures (swipe, doubleTap, longPress)
+                    if currentStep.actionType != .tap && currentStep.actionType != .automatic(delay: 0) {
+                        ActionGestureOverlay(actionType: currentStep.actionType) {
+                            coordinator.nextStep()
+                        }
+                    }
+
                     SpotlightOverlay(
                         targetFrame: targetFrame,
                         highlightShape: currentStep.highlightShape,

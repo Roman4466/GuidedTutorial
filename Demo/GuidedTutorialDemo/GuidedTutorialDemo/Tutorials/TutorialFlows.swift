@@ -830,9 +830,9 @@ struct TutorialFlows {
                 },
                 tooltipStyle: TooltipStyle(
                     backgroundColor: .white,
+                    cornerRadius: 12,
                     titleColor: .black,
                     descriptionColor: .black,
-                    cornerRadius: 12
                 )
             ),
             TutorialStep(
@@ -860,9 +860,9 @@ struct TutorialFlows {
                 },
                 tooltipStyle: TooltipStyle(
                     backgroundColor: Color(red: 1.0, green: 1.0, blue: 0.9),
+                    cornerRadius: 12,
                     titleColor: Color(red: 1.0, green: 0.9, blue: 0.5),
-                    descriptionColor: Color(red: 1.0, green: 0.85, blue: 0.4),
-                    cornerRadius: 12
+                    descriptionColor: Color(red: 1.0, green: 0.85, blue: 0.4)
                 )
             ),
             TutorialStep(

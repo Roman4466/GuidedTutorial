@@ -35,6 +35,5 @@ struct ProfileSection: View {
         .padding()
         .background(Color(red: 0.90, green: 0.85, blue: 0.78))
         .cornerRadius(15)
-        .id("profile")
     }
 }

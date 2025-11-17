@@ -33,7 +33,6 @@ struct GallerySection: View {
                                     selectedImage = index
                                 }
                                 .tutorialTarget("galleryItem\(index)", coordinator: coordinator)
-                                .id("galleryItem\(index)")
                         }
                     }
                 }
@@ -47,6 +46,5 @@ struct GallerySection: View {
             }
             .tutorialTarget("imageGallery", coordinator: coordinator)
         }
-        .id("imageGallery")
     }
 }

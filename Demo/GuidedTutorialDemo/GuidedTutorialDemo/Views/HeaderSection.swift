@@ -37,6 +37,5 @@ struct HeaderSection: View {
         .background(Color(red: 0.95, green: 0.92, blue: 0.88))
         .cornerRadius(15)
         .tutorialTarget("header", coordinator: coordinator)
-        .id("header")
     }
 }

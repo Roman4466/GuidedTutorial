@@ -28,6 +28,5 @@ struct SettingsSection: View {
         .padding()
         .background(Color(red: 0.92, green: 0.88, blue: 0.80))
         .cornerRadius(15)
-        .id("settings")
     }
 }

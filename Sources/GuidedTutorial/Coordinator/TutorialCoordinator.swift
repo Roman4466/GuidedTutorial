@@ -20,7 +20,7 @@ public class TutorialCoordinator: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     /// ScrollViewProxy for automatic scrolling to tutorial targets
-    private weak var scrollProxy: ScrollViewProxy?
+    private var scrollProxy: ScrollViewProxy?
 
     /// Enables automatic scrolling to targets when they change
     public var autoScrollEnabled: Bool = true
