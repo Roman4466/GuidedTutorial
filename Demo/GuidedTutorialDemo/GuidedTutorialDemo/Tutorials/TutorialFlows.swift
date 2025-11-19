@@ -102,23 +102,10 @@ struct TutorialFlows {
             TutorialStep(
                 targetKey: "imageGallery",
                 title: "Advanced Actions & Gestures",
-                description: "This tutorial demonstrates different action types AND skip gestures. Press and hold anywhere for 2 seconds to skip the entire tutorial!",
+                description: "This tutorial demonstrates different action types. Swipe down to skip the entire tutorial!",
                 highlightShape: .roundedRect(cornerRadius: 12),
                 tooltipPosition: .bottom(offset: 20),
-                showArrow: true,
-                customContent: {
-                    AnyView(
-                        VStack(spacing: 8) {
-                            HStack(spacing: 5) {
-                                Image(systemName: "hand.press.fill")
-                                    .foregroundColor(.orange)
-                                Text("Long press to skip (new skip gesture!)")
-                                    .font(.caption)
-                                    .foregroundColor(.orange)
-                            }
-                        }
-                    )
-                }
+                showArrow: true
             ),
             TutorialStep(
                 targetKey: "imageGallery",
@@ -212,7 +199,7 @@ struct TutorialFlows {
             name: "Advanced Tour",
             steps: steps,
             canBeSkipped: true,
-            skipGesture: .longPress,
+            skipGesture: .swipeDown,
             onComplete: {
                 print(" Advanced tutorial completed!")
             },

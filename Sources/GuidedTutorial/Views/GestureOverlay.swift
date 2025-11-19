@@ -13,17 +13,31 @@ struct GestureOverlay: View {
 
     var body: some View {
         GeometryReader { geometry in
-            Color.clear
-                .contentShape(Rectangle())
-                .simultaneousGesture(createGesture())
-        }
-    }
-
-    private func createGesture() -> some Gesture {
-        DragGesture(minimumDistance: 100)
-            .onEnded { value in
-                handleGestureEnd(value: value)
+            Group {
+                switch skipGesture {
+                case .longPress:
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .simultaneousGesture(
+                            LongPressGesture(minimumDuration: 2.0)
+                                .onEnded { _ in
+                                    onSkip()
+                                }
+                        )
+                case .swipeDown, .swipeUp:
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .simultaneousGesture(
+                            DragGesture(minimumDistance: 100)
+                                .onEnded { value in
+                                    handleGestureEnd(value: value)
+                                }
+                        )
+                default:
+                    Color.clear
+                }
             }
+        }
     }
 
     private func handleGestureEnd(value: DragGesture.Value) {
