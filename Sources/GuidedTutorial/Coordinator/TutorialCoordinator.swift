@@ -8,12 +8,35 @@
 import SwiftUI
 import Combine
 
+/// The main coordinator for managing tutorial flows and step progression.
+///
+/// `TutorialCoordinator` is responsible for:
+/// - Starting and managing tutorial flows
+/// - Tracking the current step and state
+/// - Handling step navigation (next, skip, complete)
+/// - Managing target frame registration for spotlight overlays
+/// - Automatic scrolling to tutorial targets
+///
+/// ## Usage
+/// ```swift
+/// @StateObject private var coordinator = TutorialCoordinator()
+///
+/// var body: some View {
+///     ContentView()
+///         .tutorialOverlay(coordinator: coordinator)
+/// }
+/// ```
 @MainActor
 public class TutorialCoordinator: ObservableObject {
+    /// The currently active tutorial flow, if any
     @Published public private(set) var currentFlow: TutorialFlow?
+    /// The index of the current step in the flow
     @Published public private(set) var currentStepIndex: Int = 0
+    /// The current state of the tutorial flow
     @Published public private(set) var flowState: TutorialFlowState = .notStarted
+    /// Registered target frames keyed by their target key
     @Published public private(set) var targetFrames: [String: CGRect] = [:]
+    /// Whether the tutorial overlay is currently presented
     @Published public private(set) var isPresented: Bool = false
 
     private var eventHandlers: [(TutorialEvent) -> Void] = []
@@ -32,6 +55,8 @@ public class TutorialCoordinator: ObservableObject {
 
     // MARK: - Public Methods
 
+    /// Starts a new tutorial flow
+    /// - Parameter flow: The tutorial flow to start
     public func startFlow(_ flow: TutorialFlow) {
         guard !flow.steps.isEmpty else { return }
 
@@ -49,6 +74,7 @@ public class TutorialCoordinator: ObservableObject {
         }
     }
 
+    /// Advances to the next step in the tutorial flow
     public func nextStep() {
         guard let flow = currentFlow else { return }
         guard currentStepIndex < flow.steps.count - 1 else {
@@ -67,6 +93,8 @@ public class TutorialCoordinator: ObservableObject {
         scrollToCurrentTarget()
     }
 
+    /// Skips to a specific step by index
+    /// - Parameter index: The index of the step to skip to
     public func skipToStep(index: Int) {
         guard let flow = currentFlow else { return }
         guard index >= 0 && index < flow.steps.count else { return }

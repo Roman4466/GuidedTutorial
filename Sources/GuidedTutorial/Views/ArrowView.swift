@@ -46,7 +46,7 @@ struct ArrowView: View {
             customView(from, to)
                 .accessibilityHidden(true)
         } else {
-            Canvas { context, size in
+            Canvas { context, _ in
                 let path = createCurvedPath(from: from, to: to, curveIntensity: arrowStyle.curveIntensity)
                 let trimmedPath = path.trimmedPath(from: 0, to: animationProgress)
 

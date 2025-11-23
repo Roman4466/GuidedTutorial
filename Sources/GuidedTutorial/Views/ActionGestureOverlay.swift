@@ -15,7 +15,7 @@ struct ActionGestureOverlay: View {
     @State private var tapCount = 0
 
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { _ in
             Group {
                 switch actionType {
                 case .swipe(let direction):

@@ -12,7 +12,7 @@ struct GestureOverlay: View {
     let onSkip: () -> Void
 
     var body: some View {
-        GeometryReader { geometry in
+        GeometryReader { _ in
             Group {
                 switch skipGesture {
                 case .longPress:
