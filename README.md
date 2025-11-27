@@ -299,9 +299,9 @@ let flow = TutorialFlow(
 )
 ```
 
-## Demo App
+## Example App
 
-Check the `Demo/` folder for a complete example app demonstrating all features.
+Check the `Example/` folder for a complete example app demonstrating all features.
 
 ## License
 
