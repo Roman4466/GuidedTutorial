@@ -17,17 +17,9 @@ let package = Package(
     targets: [
         .target(
             name: "GuidedTutorial"),
-        
-        
-//            .executableTarget(
-//                name: "TutorialExample",
-//                dependencies: ["GuidedTutorial"],
-//                path: "Demo/GuidedTutorialDemo"
-//            ),
-        
-            .testTarget(
-                name: "GuidedTutorialTests",
-                dependencies: ["GuidedTutorial"]
-            ),
+        .testTarget(
+            name: "GuidedTutorialTests",
+            dependencies: ["GuidedTutorial"]
+        ),
     ]
 )

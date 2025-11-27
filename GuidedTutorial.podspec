@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.homepage         = 'https://github.com/Roman4466/GuidedTutorial'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Roman Malynovsky' => 'roman@example.com' }
+  s.author           = { 'Roman Malynovsky' => 'roman.malynovsky@gmail.com' }
   s.source           = { :git => 'https://github.com/Roman4466/GuidedTutorial.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '15.0'

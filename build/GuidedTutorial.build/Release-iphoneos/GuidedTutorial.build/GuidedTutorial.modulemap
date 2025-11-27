@@ -1,4 +1,0 @@
-module GuidedTutorial {
-header "GuidedTutorial-Swift.h"
-export *
-}
