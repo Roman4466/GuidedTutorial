@@ -72,33 +72,5 @@ public struct TutorialFlow: Identifiable {
         self.defaultBlurStyle = defaultBlurStyle
         self.defaultArrowStyle = defaultArrowStyle
         self.validateAccessibility = validateAccessibility
-
-        #if DEBUG
-        if validateAccessibility {
-            self.performAccessibilityValidation(defaultStyle: defaultTooltipStyle, steps: steps)
-        }
-        #endif
     }
-
-    #if DEBUG
-    private func performAccessibilityValidation(defaultStyle: TooltipStyle, steps: [TutorialStep]) {
-        // Validate default style
-        let defaultWarnings = AccessibilityHelpers.validateTooltipStyle(defaultStyle)
-        if !defaultWarnings.isEmpty {
-            print("⚠️ Accessibility Warning in '\(name)' default style:")
-            defaultWarnings.forEach { print("  - \($0)") }
-        }
-
-        // Validate each step's custom style
-        for (index, step) in steps.enumerated() {
-            if let customStyle = step.tooltipStyle {
-                let warnings = AccessibilityHelpers.validateTooltipStyle(customStyle)
-                if !warnings.isEmpty {
-                    print("⚠️ Accessibility Warning in '\(name)' step \(index + 1) (\(step.title)):")
-                    warnings.forEach { print("  - \($0)") }
-                }
-            }
-        }
-    }
-    #endif
 }
