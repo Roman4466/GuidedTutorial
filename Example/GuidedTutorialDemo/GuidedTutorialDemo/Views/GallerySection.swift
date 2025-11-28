@@ -36,13 +36,6 @@ struct GallerySection: View {
                         }
                     }
                 }
-                .onChange(of: coordinator.currentStep?.targetKey) { targetKey in
-                    if let targetKey = targetKey, targetKey.hasPrefix("galleryItem") {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            galleryScrollProxy.scrollTo(targetKey, anchor: .center)
-                        }
-                    }
-                }
             }
             .tutorialTarget("imageGallery", coordinator: coordinator)
         }
