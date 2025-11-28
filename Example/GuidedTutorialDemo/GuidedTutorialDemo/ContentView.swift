@@ -53,7 +53,6 @@ struct ContentView: View {
                             onStartAdvancedTutorial: { TutorialFlows.advancedTutorial(coordinator: coordinator) },
                             onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) },
                             onStartCustomizationDemo: { TutorialFlows.customizationDemo(coordinator: coordinator) },
-                            onStartButtonCustomizationDemo: { TutorialFlows.buttonCustomizationDemo(coordinator: coordinator) },
                             onStartAccessibilityDemo: { TutorialFlows.accessibilityDemo(coordinator: coordinator) }
                         )
                     }

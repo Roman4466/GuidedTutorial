@@ -14,7 +14,6 @@ struct TutorialControlsSection: View {
     let onStartAdvancedTutorial: () -> Void
     let onStartGalleryTutorial: () -> Void
     let onStartCustomizationDemo: () -> Void
-    let onStartButtonCustomizationDemo: () -> Void
     let onStartAccessibilityDemo: () -> Void
 
     var body: some View {
@@ -51,14 +50,6 @@ struct TutorialControlsSection: View {
                 .buttonStyle(.bordered)
                 .tutorialTarget("customizationButton", coordinator: coordinator)
 
-                Button("Button Styles") {
-                    onStartButtonCustomizationDemo()
-                }
-                .buttonStyle(.bordered)
-                .tutorialTarget("buttonStylesButton", coordinator: coordinator)
-            }
-
-            HStack(spacing: 15) {
                 Button("Accessibility Demo") {
                     onStartAccessibilityDemo()
                 }

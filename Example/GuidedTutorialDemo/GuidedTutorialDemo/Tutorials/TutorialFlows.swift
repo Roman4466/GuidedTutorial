@@ -421,57 +421,13 @@ struct TutorialFlows {
                 highlightShape: .rectangle(cornerRadius: 8),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true
-            )
-        ]
-
-        let flow = TutorialFlow(
-            name: "Customization Demo",
-            steps: steps,
-            canBeSkipped: true,
-            skipGesture: .swipeDown,
-            onComplete: {
-                print(" Customization demo completed!")
-            },
-            onSkip: {
-                print(" Customization demo skipped!")
-            },
-            defaultTooltipStyle: TooltipStyle(
-                backgroundColor: Color(red: 0.95, green: 0.92, blue: 0.88),
-                cornerRadius: 16,
-                shadowColor: Color(red: 0.6, green: 0.5, blue: 0.4),
-                shadowOpacity: 0.25,
-                shadowRadius: 10,
-                shadowX: 0,
-                shadowY: 6,
-                titleFont: .system(.headline, design: .serif),
-                titleColor: Color(red: 0.5, green: 0.4, blue: 0.3),
-                descriptionFont: .system(.body, design: .serif),
-                descriptionColor: Color(red: 0.6, green: 0.5, blue: 0.4)
             ),
-            defaultBlurStyle: BlurStyle(
-                dimColor: Color(red: 0.4, green: 0.3, blue: 0.2),
-                dimOpacity: 0.6
-            ),
-            defaultArrowStyle: ArrowStyle(
-                color: Color(red: 0.7, green: 0.5, blue: 0.3),
-                lineWidth: 3,
-                arrowheadLength: 12,
-                animationDuration: 0.7
-            )
-        )
-
-        coordinator.startFlow(flow)
-    }
-
-    // MARK: - Button Customization Demo
-    static func buttonCustomizationDemo(coordinator: TutorialCoordinator) {
-        let steps = [
             TutorialStep(
-                targetKey: "header",
+                targetKey: "saveButton",
                 title: "Button Customization",
-                description: "This tutorial showcases the new button customization features! Notice the custom button text below.",
-                highlightShape: .roundedRect(cornerRadius: 15),
-                tooltipPosition: .bottom(offset: 20),
+                description: "You can also customize buttons! This step has custom button text.",
+                highlightShape: .roundedRect(cornerRadius: 8),
+                tooltipPosition: .top(offset: 15),
                 showArrow: true,
                 tooltipStyle: TooltipStyle(
                     buttonStyle: TooltipButtonStyle(
@@ -531,25 +487,9 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "imageGallery",
-                title: "Custom Button Spacing",
-                description: "Even button spacing is customizable! Notice the extra space between the buttons below.",
-                highlightShape: .roundedRect(cornerRadius: 12),
-                tooltipPosition: .bottom(offset: 20),
-                showArrow: true,
-                tooltipStyle: TooltipStyle(
-                    buttonStyle: TooltipButtonStyle(
-                        nextButtonText: "Continue",
-                        skipButtonText: "Exit",
-                        nextButtonColor: .blue,
-                        buttonSpacing: 24
-                    )
-                )
-            ),
-            TutorialStep(
-                targetKey: "settingsTitle",
                 title: "Custom Action Buttons!",
                 description: "You can add CUSTOM BUTTONS with their own actions! This step has 3 custom buttons instead of Next/Skip.",
-                highlightShape: .rectangle(cornerRadius: 8),
+                highlightShape: .roundedRect(cornerRadius: 12),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true,
                 customContent: {
@@ -599,20 +539,20 @@ struct TutorialFlows {
             TutorialStep(
                 targetKey: "profileTitle",
                 title: "Mix & Match Everything!",
-                description: "You can customize button text, colors, styles, layout, spacing, and even add custom buttons. Mix any combination to match your app's design!",
+                description: "You can customize everything: tooltips, arrows, buttons, colors, fonts, shapes, and more. Mix any combination to match your app's design!",
                 highlightShape: .rectangle(cornerRadius: 8),
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: true,
                 customContent: {
                     AnyView(
                         VStack(spacing: 8) {
-                            Text(" Button Options ")
+                            Text(" Customization Options ")
                                 .font(.caption)
                                 .fontWeight(.bold)
                             HStack(spacing: 12) {
-                                Label("Text", systemImage: "textformat")
-                                Label("Color", systemImage: "paintpalette")
-                                Label("Layout", systemImage: "square.split.2x1")
+                                Label("Styles", systemImage: "paintbrush")
+                                Label("Arrows", systemImage: "arrow.right")
+                                Label("Buttons", systemImage: "hand.tap")
                             }
                             .font(.caption2)
                         }
@@ -633,21 +573,38 @@ struct TutorialFlows {
         ]
 
         let flow = TutorialFlow(
-            name: "Button Customization Demo",
+            name: "Customization Demo",
             steps: steps,
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print(" Button customization demo completed!")
+                print(" Customization demo completed!")
             },
             onSkip: {
-                print(" Button customization demo skipped!")
+                print(" Customization demo skipped!")
             },
             defaultTooltipStyle: TooltipStyle(
-                buttonStyle: TooltipButtonStyle(
-                    nextButtonText: "Next",
-                    skipButtonText: "Skip"
-                )
+                backgroundColor: Color(red: 0.95, green: 0.92, blue: 0.88),
+                cornerRadius: 16,
+                shadowColor: Color(red: 0.6, green: 0.5, blue: 0.4),
+                shadowOpacity: 0.25,
+                shadowRadius: 10,
+                shadowX: 0,
+                shadowY: 6,
+                titleFont: .system(.headline, design: .serif),
+                titleColor: Color(red: 0.5, green: 0.4, blue: 0.3),
+                descriptionFont: .system(.body, design: .serif),
+                descriptionColor: Color(red: 0.6, green: 0.5, blue: 0.4)
+            ),
+            defaultBlurStyle: BlurStyle(
+                dimColor: Color(red: 0.4, green: 0.3, blue: 0.2),
+                dimOpacity: 0.6
+            ),
+            defaultArrowStyle: ArrowStyle(
+                color: Color(red: 0.7, green: 0.5, blue: 0.3),
+                lineWidth: 3,
+                arrowheadLength: 12,
+                animationDuration: 0.7
             )
         )
 
