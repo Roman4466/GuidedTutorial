@@ -365,15 +365,42 @@ struct TutorialFlows {
             "Listen to your music collection. Explore playlists and albums.",
             "Access your digital book library. Continue reading where you left off."
         ]
+        let scrollAnimations: [ScrollAnimation] = [
+            .easeInOut(duration: 0.5),
+            .spring(response: 0.6, dampingFraction: 0.7),
+            .easeOut(duration: 0.8),
+            .interpolatingSpring(stiffness: 200, damping: 15),
+            .linear(duration: 0.4)
+        ]
+        let animationDescriptions = [
+            "EaseInOut",
+            "Spring",
+            "EaseOut",
+            "Interpolating Spring",
+            "Linear"
+        ]
 
         var steps: [TutorialStep] = [
             TutorialStep(
                 targetKey: "galleryTitle",
-                title: "Gallery Overview",
-                description: "This gallery contains different media types. Let's explore each one!",
+                title: "Gallery Overview + Scroll Animation Showcase",
+                description: "This gallery demonstrates different scroll animations! Each item uses a unique animation style when scrolling to it.",
                 highlightShape: .rectangle(cornerRadius: 8),
                 tooltipPosition: .bottom(offset: 15),
-                showArrow: true
+                showArrow: true,
+                customContent: {
+                    AnyView(
+                        VStack(spacing: 8) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "arrow.down.circle.fill")
+                                    .foregroundColor(.blue)
+                                Text("Watch the scroll animation!")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    )
+                }
             )
         ]
 
@@ -388,15 +415,26 @@ struct TutorialFlows {
                     showArrow: true,
                     customContent: {
                         AnyView(
-                            HStack(spacing: 5) {
-                                Image(systemName: galleryIcons[index])
-                                    .foregroundColor(.purple)
-                                Text("Item \(index + 1) of 5")
-                                    .font(.caption)
-                                    .foregroundColor(.purple)
+                            VStack(spacing: 8) {
+                                HStack(spacing: 5) {
+                                    Image(systemName: galleryIcons[index])
+                                        .foregroundColor(.purple)
+                                    Text("Item \(index + 1) of 5")
+                                        .font(.caption)
+                                        .foregroundColor(.purple)
+                                }
+                                HStack(spacing: 5) {
+                                    Image(systemName: "arrow.up.arrow.down")
+                                        .foregroundColor(.orange)
+                                        .font(.caption2)
+                                    Text("Animation: \(animationDescriptions[index])")
+                                        .font(.caption2)
+                                        .foregroundColor(.orange)
+                                }
                             }
                         )
-                    }
+                    },
+                    scrollAnimation: scrollAnimations[index]
                 )
             )
         }
@@ -411,7 +449,8 @@ struct TutorialFlows {
             },
             onSkip: {
                 print(" Gallery tutorial skipped!")
-            }
+            },
+            scrollAnimation: .easeInOut(duration: 0.5)
         )
 
         coordinator.startFlow(flow)

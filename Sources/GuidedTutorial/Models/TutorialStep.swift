@@ -49,6 +49,8 @@ public struct TutorialStep: Identifiable {
     public let blurStyle: BlurStyle?
     /// Custom arrow style for this step
     public let arrowStyle: ArrowStyle?
+    /// Custom scroll animation for this step
+    public let scrollAnimation: ScrollAnimation?
 
     /// Creates a new tutorial step
     /// - Parameters:
@@ -65,6 +67,7 @@ public struct TutorialStep: Identifiable {
     ///   - tooltipStyle: Custom tooltip style for this step
     ///   - blurStyle: Custom blur style for this step
     ///   - arrowStyle: Custom arrow style for this step
+    ///   - scrollAnimation: Custom scroll animation for this step
     public init(
         id: UUID = UUID(),
         targetKey: String,
@@ -78,7 +81,8 @@ public struct TutorialStep: Identifiable {
         customContent: (() -> AnyView)? = nil,
         tooltipStyle: TooltipStyle? = nil,
         blurStyle: BlurStyle? = nil,
-        arrowStyle: ArrowStyle? = nil
+        arrowStyle: ArrowStyle? = nil,
+        scrollAnimation: ScrollAnimation? = nil
     ) {
         self.id = id
         self.targetKey = targetKey
@@ -93,5 +97,6 @@ public struct TutorialStep: Identifiable {
         self.tooltipStyle = tooltipStyle
         self.blurStyle = blurStyle
         self.arrowStyle = arrowStyle
+        self.scrollAnimation = scrollAnimation
     }
 }

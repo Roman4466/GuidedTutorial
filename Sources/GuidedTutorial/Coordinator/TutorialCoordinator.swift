@@ -164,7 +164,10 @@ public class TutorialCoordinator: ObservableObject {
 
         let targetKey = currentStep.targetKey
 
-        if animated, let animation = currentFlow.scrollAnimation.animation {
+        // Use step's custom animation if available, otherwise use flow's default
+        let scrollAnimation = currentStep.scrollAnimation ?? currentFlow.scrollAnimation
+
+        if animated, let animation = scrollAnimation.animation {
             withAnimation(animation) {
                 scrollProxy.scrollTo(targetKey, anchor: .center)
             }
