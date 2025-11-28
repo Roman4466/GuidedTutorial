@@ -51,7 +51,6 @@ struct ContentView: View {
                             coordinator: coordinator,
                             onStartBasicTutorial: { TutorialFlows.basicTutorial(coordinator: coordinator) },
                             onStartAdvancedTutorial: { TutorialFlows.advancedTutorial(coordinator: coordinator) },
-                            onStartFeatureShowcase: { TutorialFlows.featureShowcase(coordinator: coordinator) },
                             onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) },
                             onStartCustomizationDemo: { TutorialFlows.customizationDemo(coordinator: coordinator) },
                             onStartButtonCustomizationDemo: { TutorialFlows.buttonCustomizationDemo(coordinator: coordinator) },

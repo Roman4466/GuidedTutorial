@@ -12,7 +12,6 @@ struct TutorialControlsSection: View {
     @ObservedObject var coordinator: TutorialCoordinator
     let onStartBasicTutorial: () -> Void
     let onStartAdvancedTutorial: () -> Void
-    let onStartFeatureShowcase: () -> Void
     let onStartGalleryTutorial: () -> Void
     let onStartCustomizationDemo: () -> Void
     let onStartButtonCustomizationDemo: () -> Void
@@ -38,17 +37,10 @@ struct TutorialControlsSection: View {
             }
 
             HStack(spacing: 15) {
-                Button("Features Showcase") {
-                    onStartFeatureShowcase()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.gray)
-                .tutorialTarget("showcaseButton", coordinator: coordinator)
-
                 Button("Gallery Tour") {
                     onStartGalleryTutorial()
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.borderedProminent)
                 .tutorialTarget("galleryTourButton", coordinator: coordinator)
             }
 
