@@ -53,7 +53,7 @@ struct ContentView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .tutorialOverlay(coordinator: coordinator)
+        .guidedTutorial(coordinator: coordinator)
     }
 
     private func startBadContrastTutorial() {
@@ -64,11 +64,11 @@ struct ContentView: View {
             backgroundColor: .white,
             cornerRadius: 12,
             shadowRadius: 8,
-            padding: 20,
             titleFont: .headline,
             titleColor: Color(red: 0.8, green: 0.8, blue: 0.8), // Light gray - BAD!
             descriptionFont: .subheadline,
-            descriptionColor: Color(red: 0.7, green: 0.7, blue: 0.7) // Light gray - BAD!
+            descriptionColor: Color(red: 0.7, green: 0.7, blue: 0.7), // Light gray - BAD!
+            padding: 20
         )
 
         let step = TutorialStep(

@@ -97,16 +97,16 @@ public struct AccessibilityHelpers {
     public static func validateTooltipStyle(_ style: TooltipStyle) -> [String] {
         var warnings: [String] = []
 
-        // Check contrast between background and common text colors
-        let primaryTextContrast = contrastRatio(between: .primary, and: style.backgroundColor)
-        let secondaryTextContrast = contrastRatio(between: .secondary, and: style.backgroundColor)
-
-        if primaryTextContrast < 4.5 {
-            warnings.append("Tooltip background may have insufficient contrast with primary text (ratio: \(String(format: "%.2f", primaryTextContrast)), required: 4.5)")
+        // Check title color contrast
+        let titleContrast = contrastRatio(between: style.titleColor, and: style.backgroundColor)
+        if titleContrast < 4.5 {
+            warnings.append("Title color contrast ratio \(String(format: "%.1f", titleContrast)):1 is below WCAG AA standard (4.5:1 required)")
         }
 
-        if secondaryTextContrast < 4.5 {
-            warnings.append("Tooltip background may have insufficient contrast with secondary text (ratio: \(String(format: "%.2f", secondaryTextContrast)), required: 4.5)")
+        // Check description color contrast
+        let descriptionContrast = contrastRatio(between: style.descriptionColor, and: style.backgroundColor)
+        if descriptionContrast < 4.5 {
+            warnings.append("Description color contrast ratio \(String(format: "%.1f", descriptionContrast)):1 is below WCAG AA standard (4.5:1 required)")
         }
 
         return warnings
