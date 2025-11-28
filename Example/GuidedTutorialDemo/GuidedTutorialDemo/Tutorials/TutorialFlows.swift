@@ -80,8 +80,8 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "imageGallery",
-                title: "Image Gallery (Swipe Action)",
-                description: "This step uses a SWIPE RIGHT action type. Try swiping right on the gallery to advance!",
+                title: "Swipe to Continue! ",
+                description: "Notice there's NO 'Next' button below! The only way to proceed is to SWIPE RIGHT on the gallery. This forces users to perform specific actions.",
                 highlightShape: .roundedRect(cornerRadius: 12),
                 actionType: .swipe(direction: .right),
                 tooltipPosition: .bottom(offset: 20),
@@ -92,11 +92,16 @@ struct TutorialFlows {
                         VStack(spacing: 8) {
                             HStack(spacing: 5) {
                                 Image(systemName: "hand.point.left.fill")
-                                    .foregroundColor(.blue)
-                                Text(" Swipe RIGHT on the gallery")
-                                    .font(.caption)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.orange)
+                                    .font(.title3)
+                                Text("Swipe RIGHT on the gallery")
+                                    .font(.callout)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.orange)
                             }
+                            Text("(This is the ONLY way to continue)")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
                         }
                     )
                 }
@@ -111,40 +116,48 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "notificationsToggle",
-                title: "Notifications Toggle (Double Tap)",
-                description: "This step uses DOUBLE TAP action. Double tap anywhere to continue!",
+                title: "Double Tap Required! ",
+                description: "Again, no Next button! You must DOUBLE TAP anywhere on the screen to continue. Different action types can enforce different user interactions.",
                 highlightShape: .roundedRect(cornerRadius: 8),
                 actionType: .doubleTap,
                 tooltipPosition: .top(offset: 15),
                 blockOtherInteractions: false,
                 customContent: {
                     AnyView(
-                        HStack(spacing: 5) {
-                            Image(systemName: "hand.tap.fill")
-                                .foregroundColor(.purple)
-                            Text(" Double tap anywhere")
-                                .font(.caption)
-                                .foregroundColor(.purple)
+                        VStack(spacing: 5) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "hand.tap.fill")
+                                    .foregroundColor(.purple)
+                                    .font(.title3)
+                                Text("Double tap anywhere to proceed")
+                                    .font(.callout)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.purple)
+                            }
                         }
                     )
                 }
             ),
             TutorialStep(
                 targetKey: "darkModeToggle",
-                title: "Dark Mode (Long Press)",
-                description: "This step demonstrates LONG PRESS action. Press and hold anywhere for 1 second to advance.",
+                title: "Long Press Action ",
+                description: "One more forced action! PRESS AND HOLD anywhere for 1 second. Perfect for teaching gestures or confirming important actions.",
                 highlightShape: .roundedRect(cornerRadius: 8),
                 actionType: .longPress(duration: 1.0),
                 tooltipPosition: .topTrailing(offset: 15),
                 blockOtherInteractions: false,
                 customContent: {
                     AnyView(
-                        HStack(spacing: 5) {
-                            Image(systemName: "hand.press.fill")
-                                .foregroundColor(.green)
-                            Text("Press and hold for 1 second")
-                                .font(.caption)
-                                .foregroundColor(.green)
+                        VStack(spacing: 5) {
+                            HStack(spacing: 5) {
+                                Image(systemName: "hand.press.fill")
+                                    .foregroundColor(.green)
+                                    .font(.title3)
+                                Text("Press and hold for 1 second")
+                                    .font(.callout)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.green)
+                            }
                         }
                     )
                 }

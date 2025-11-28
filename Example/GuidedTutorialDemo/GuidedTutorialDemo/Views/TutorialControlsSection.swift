@@ -26,9 +26,6 @@ struct TutorialControlsSection: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tutorialTarget("basicTourButton", coordinator: coordinator)
-            }
-
-            HStack(spacing: 15) {
                 Button("Gallery Tour") {
                     onStartGalleryTutorial()
                 }

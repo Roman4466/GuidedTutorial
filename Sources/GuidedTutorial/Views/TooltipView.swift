@@ -90,9 +90,19 @@ struct TooltipView: View {
         Group {
             if let customButtons = tooltipStyle.buttonStyle.customButtons, !customButtons.isEmpty {
                 customButtonsView(customButtons)
-            } else {
+            } else if shouldShowDefaultButtons {
                 defaultButtonsView
             }
+        }
+    }
+
+    private var shouldShowDefaultButtons: Bool {
+        // Hide default buttons if a specific action is required (not tap or automatic)
+        switch step.actionType {
+        case .tap, .automatic:
+            return true
+        default:
+            return false
         }
     }
 
