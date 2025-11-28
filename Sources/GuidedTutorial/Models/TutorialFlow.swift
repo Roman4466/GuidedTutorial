@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// Represents a complete tutorial flow containing multiple steps.
 ///
@@ -44,6 +45,8 @@ public struct TutorialFlow: Identifiable {
     public let defaultBlurStyle: BlurStyle
     /// Default arrow style for all steps
     public let defaultArrowStyle: ArrowStyle
+    /// Animation style for scrolling to tutorial targets
+    public let scrollAnimation: ScrollAnimation
     /// Whether to validate accessibility in DEBUG builds
     public let validateAccessibility: Bool
 
@@ -59,6 +62,7 @@ public struct TutorialFlow: Identifiable {
         defaultTooltipStyle: TooltipStyle = .default,
         defaultBlurStyle: BlurStyle = .default,
         defaultArrowStyle: ArrowStyle = .default,
+        scrollAnimation: ScrollAnimation = .default,
         validateAccessibility: Bool = true
     ) {
         self.id = id
@@ -71,6 +75,7 @@ public struct TutorialFlow: Identifiable {
         self.defaultTooltipStyle = defaultTooltipStyle
         self.defaultBlurStyle = defaultBlurStyle
         self.defaultArrowStyle = defaultArrowStyle
+        self.scrollAnimation = scrollAnimation
         self.validateAccessibility = validateAccessibility
     }
 }

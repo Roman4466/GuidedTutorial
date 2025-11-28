@@ -157,14 +157,15 @@ public class TutorialCoordinator: ObservableObject {
     public func scrollToCurrentTarget(animated: Bool = true) {
         guard autoScrollEnabled,
               let scrollProxy = scrollProxy,
-              let currentStep = currentStep else {
+              let currentStep = currentStep,
+              let currentFlow = currentFlow else {
             return
         }
 
         let targetKey = currentStep.targetKey
 
-        if animated {
-            withAnimation(.easeInOut(duration: scrollAnimationDuration)) {
+        if animated, let animation = currentFlow.scrollAnimation.animation {
+            withAnimation(animation) {
                 scrollProxy.scrollTo(targetKey, anchor: .center)
             }
         } else {
