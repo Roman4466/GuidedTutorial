@@ -62,13 +62,13 @@ struct ContentView: View {
         // Create a tooltip style with BAD contrast (light gray on white)
         let badStyle = TooltipStyle(
             backgroundColor: .white,
-            titleColor: Color(red: 0.8, green: 0.8, blue: 0.8), // Light gray - BAD!
-            descriptionColor: Color(red: 0.7, green: 0.7, blue: 0.7), // Light gray - BAD!
             cornerRadius: 12,
             shadowRadius: 8,
             padding: 20,
             titleFont: .headline,
-            descriptionFont: .subheadline
+            titleColor: Color(red: 0.8, green: 0.8, blue: 0.8), // Light gray - BAD!
+            descriptionFont: .subheadline,
+            descriptionColor: Color(red: 0.7, green: 0.7, blue: 0.7) // Light gray - BAD!
         )
 
         let step = TutorialStep(
@@ -85,10 +85,10 @@ struct ContentView: View {
             name: "Bad Contrast Tutorial",
             steps: [step],
             canBeSkipped: true,
-            validateAccessibility: true, // This will trigger warnings in console
             onComplete: {
                 print("Tutorial completed!")
-            }
+            },
+            validateAccessibility: true // This will trigger warnings in console
         )
 
         // Simulate console output for UI

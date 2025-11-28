@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		48FC83C42EDA255400FD1684 /* GuidedTutorial in Frameworks */ = {isa = PBXBuildFile; productRef = 48FC83C32EDA255400FD1684 /* GuidedTutorial */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		48FC83B42EDA222E00FD1684 /* WarningExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarningExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48FC83C42EDA255400FD1684 /* GuidedTutorial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = WarningExample;
 			packageProductDependencies = (
+				48FC83C32EDA255400FD1684 /* GuidedTutorial */,
 			);
 			productName = WarningExample;
 			productReference = 48FC83B42EDA222E00FD1684 /* WarningExample.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 48FC83AB2EDA222E00FD1684;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				48FC83C22EDA255400FD1684 /* XCLocalSwiftPackageReference "../../../GuidedTutorial" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 48FC83B52EDA222E00FD1684 /* Products */;
 			projectDirPath = "";
@@ -332,6 +341,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		48FC83C22EDA255400FD1684 /* XCLocalSwiftPackageReference "../../../GuidedTutorial" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../GuidedTutorial;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		48FC83C32EDA255400FD1684 /* GuidedTutorial */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GuidedTutorial;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 48FC83AC2EDA222E00FD1684 /* Project object */;
 }
