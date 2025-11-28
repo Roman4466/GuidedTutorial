@@ -50,7 +50,6 @@ struct ContentView: View {
                         TutorialControlsSection(
                             coordinator: coordinator,
                             onStartBasicTutorial: { TutorialFlows.basicTutorial(coordinator: coordinator) },
-                            onStartAdvancedTutorial: { TutorialFlows.advancedTutorial(coordinator: coordinator) },
                             onStartGalleryTutorial: { TutorialFlows.galleryItemsTutorial(coordinator: coordinator) },
                             onStartCustomizationDemo: { TutorialFlows.customizationDemo(coordinator: coordinator) },
                             onStartAccessibilityDemo: { TutorialFlows.accessibilityDemo(coordinator: coordinator) }

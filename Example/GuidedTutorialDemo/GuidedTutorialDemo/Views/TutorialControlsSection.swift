@@ -11,7 +11,6 @@ import GuidedTutorial
 struct TutorialControlsSection: View {
     @ObservedObject var coordinator: TutorialCoordinator
     let onStartBasicTutorial: () -> Void
-    let onStartAdvancedTutorial: () -> Void
     let onStartGalleryTutorial: () -> Void
     let onStartCustomizationDemo: () -> Void
     let onStartAccessibilityDemo: () -> Void
@@ -22,17 +21,11 @@ struct TutorialControlsSection: View {
                 .font(.headline)
 
             HStack(spacing: 15) {
-                Button("Basic Tour") {
+                Button("Main Tour") {
                     onStartBasicTutorial()
                 }
                 .buttonStyle(.borderedProminent)
                 .tutorialTarget("basicTourButton", coordinator: coordinator)
-
-                Button("Advanced") {
-                    onStartAdvancedTutorial()
-                }
-                .buttonStyle(.bordered)
-                .tutorialTarget("advancedTourButton", coordinator: coordinator)
             }
 
             HStack(spacing: 15) {

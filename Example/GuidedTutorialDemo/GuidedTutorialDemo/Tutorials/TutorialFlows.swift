@@ -24,7 +24,7 @@ struct Diamond: Shape {
 
 struct TutorialFlows {
 
-    // MARK: - Basic Tutorial
+    // MARK: - Main Tutorial
     static func basicTutorial(coordinator: TutorialCoordinator) {
         let steps = [
             TutorialStep(
@@ -77,35 +77,6 @@ struct TutorialFlows {
                 highlightShape: .circle,
                 tooltipPosition: .top(offset: 20),
                 showArrow: true
-            )
-        ]
-
-        let flow = TutorialFlow(
-            name: "Basic Tour",
-            steps: steps,
-            canBeSkipped: true,
-            skipGesture: .swipeDown,
-            onComplete: {
-                print(" Basic tutorial completed!")
-            },
-            onSkip: {
-                print(" Basic tutorial skipped!")
-            }
-        )
-
-        coordinator.startFlow(flow)
-    }
-
-    // MARK: - Advanced Tutorial
-    static func advancedTutorial(coordinator: TutorialCoordinator) {
-        let steps = [
-            TutorialStep(
-                targetKey: "imageGallery",
-                title: "Advanced Actions & Gestures",
-                description: "This tutorial demonstrates different action types. Swipe down to skip the entire tutorial!",
-                highlightShape: .roundedRect(cornerRadius: 12),
-                tooltipPosition: .bottom(offset: 20),
-                showArrow: true
             ),
             TutorialStep(
                 targetKey: "imageGallery",
@@ -132,8 +103,8 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "settingsTitle",
-                title: "Settings Section",
-                description: "Configure your app preferences here. Let's explore the available options.",
+                title: "Settings Section (Auto-advance)",
+                description: "Configure your app preferences here. This step auto-advances after 2 seconds.",
                 highlightShape: .rectangle(cornerRadius: 8),
                 actionType: .automatic(delay: 2.0),
                 tooltipPosition: .bottom(offset: 15)
@@ -196,15 +167,15 @@ struct TutorialFlows {
         ]
 
         let flow = TutorialFlow(
-            name: "Advanced Tour",
+            name: "Main Tour",
             steps: steps,
             canBeSkipped: true,
             skipGesture: .swipeDown,
             onComplete: {
-                print(" Advanced tutorial completed!")
+                print(" Main tutorial completed!")
             },
             onSkip: {
-                print(" Advanced tutorial skipped!")
+                print(" Main tutorial skipped!")
             }
         )
 
