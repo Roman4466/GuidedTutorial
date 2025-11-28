@@ -1,3 +1,10 @@
+//
+//  ContentView.swift
+//  WarningExample
+//
+//  Created by Roman Malynovsky on 28.11.2025.
+//
+
 import SwiftUI
 import GuidedTutorial
 
@@ -93,4 +100,8 @@ struct ContentView: View {
 
         coordinator.startFlow(flow)
     }
+}
+
+#Preview {
+    ContentView()
 }

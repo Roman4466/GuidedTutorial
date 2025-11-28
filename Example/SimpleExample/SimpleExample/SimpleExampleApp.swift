@@ -1,5 +1,11 @@
+//
+//  SimpleExampleApp.swift
+//  SimpleExample
+//
+//  Created by Roman Malynovsky on 28.11.2025.
+//
+
 import SwiftUI
-import GuidedTutorial
 
 @main
 struct SimpleExampleApp: App {
