@@ -67,6 +67,9 @@ struct TutorialOverlayView: View {
                         } : nil,
                         tooltipStyle: currentStep.tooltipStyle ?? coordinator.currentFlow?.defaultTooltipStyle ?? .default
                     )
+                    .onAppear {
+                        handleAutomaticAdvance(for: currentStep)
+                    }
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .transition(.opacity)
@@ -122,6 +125,15 @@ struct TutorialOverlayView: View {
         case .automatic:
             // For automatic, determine based on available space
             return CGPoint(x: targetFrame.midX, y: targetFrame.midY)
+        }
+    }
+
+    private func handleAutomaticAdvance(for step: TutorialStep) {
+        if case .automatic(let delay) = step.actionType {
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                coordinator.nextStep()
+            }
         }
     }
 }
