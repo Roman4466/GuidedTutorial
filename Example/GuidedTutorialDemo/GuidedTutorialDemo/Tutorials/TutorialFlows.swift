@@ -107,14 +107,6 @@ struct TutorialFlows {
                 }
             ),
             TutorialStep(
-                targetKey: "settingsTitle",
-                title: "Settings Section (Auto-advance)",
-                description: "Configure your app preferences here. This step auto-advances after 2 seconds.",
-                highlightShape: .rectangle(cornerRadius: 8),
-                actionType: .automatic(delay: 2.0),
-                tooltipPosition: .bottom(offset: 15)
-            ),
-            TutorialStep(
                 targetKey: "notificationsToggle",
                 title: "Double Tap Required! ",
                 description: "Again, no Next button! You must DOUBLE TAP anywhere on the screen to continue. Different action types can enforce different user interactions.",
