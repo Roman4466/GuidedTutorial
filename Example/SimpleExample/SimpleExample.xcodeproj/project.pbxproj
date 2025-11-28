@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		48FC83E22EDA27EE00FD1684 /* GuidedTutorial in Frameworks */ = {isa = PBXBuildFile; productRef = 48FC83E12EDA27EE00FD1684 /* GuidedTutorial */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		48FC839D2EDA221500FD1684 /* SimpleExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48FC83E22EDA27EE00FD1684 /* GuidedTutorial in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = SimpleExample;
 			packageProductDependencies = (
+				48FC83E12EDA27EE00FD1684 /* GuidedTutorial */,
 			);
 			productName = SimpleExample;
 			productReference = 48FC839D2EDA221500FD1684 /* SimpleExample.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 48FC83942EDA221500FD1684;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				48FC83E02EDA27EE00FD1684 /* XCLocalSwiftPackageReference "../../../GuidedTutorial" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 48FC839E2EDA221500FD1684 /* Products */;
 			projectDirPath = "";
@@ -332,6 +341,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		48FC83E02EDA27EE00FD1684 /* XCLocalSwiftPackageReference "../../../GuidedTutorial" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../GuidedTutorial;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		48FC83E12EDA27EE00FD1684 /* GuidedTutorial */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GuidedTutorial;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 48FC83952EDA221500FD1684 /* Project object */;
 }

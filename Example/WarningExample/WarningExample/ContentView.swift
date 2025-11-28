@@ -91,13 +91,6 @@ struct ContentView: View {
             validateAccessibility: true // This will trigger warnings in console
         )
 
-        // Simulate console output for UI
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            consoleOutput.append("⚠️ Accessibility Warning in 'Bad Contrast Tutorial' step 1 (Bad Contrast Example):")
-            consoleOutput.append("  - Title color contrast ratio 1.2:1 is below WCAG AA standard (4.5:1 required)")
-            consoleOutput.append("  - Description color contrast ratio 1.5:1 is below WCAG AA standard (4.5:1 required)")
-        }
-
         coordinator.startFlow(flow)
     }
 }
