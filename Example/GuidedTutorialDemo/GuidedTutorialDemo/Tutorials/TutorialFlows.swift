@@ -624,8 +624,8 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "notificationBell",
-                title: "Automatic Validation ",
-                description: "The framework AUTOMATICALLY validates accessibility in DEBUG mode! Check your console for warnings. This tooltip has good contrast.",
+                title: "WCAG Validation ",
+                description: "You can enable accessibility validation by setting validateAccessibility: true in TutorialFlow. The framework will log contrast warnings in DEBUG mode.",
                 highlightShape: .circle,
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: false,
@@ -639,7 +639,7 @@ struct TutorialFlows {
                                     .font(.caption)
                                     .fontWeight(.bold)
                             }
-                            Text("Ratio: 21:1 (Perfect!)")
+                            Text("Good contrast: 21:1")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -654,8 +654,8 @@ struct TutorialFlows {
             ),
             TutorialStep(
                 targetKey: "counter",
-                title: "Low Contrast Warning ",
-                description: "This step intentionally uses poor contrast. In DEBUG builds, you'll see a warning in the console about this!",
+                title: "Low Contrast Example ",
+                description: "This step intentionally uses poor contrast. With validateAccessibility: true, you would see warnings in the console for this tooltip.",
                 highlightShape: .circle,
                 tooltipPosition: .bottom(offset: 20),
                 showArrow: false,
@@ -665,11 +665,11 @@ struct TutorialFlows {
                             HStack(spacing: 5) {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .foregroundColor(.orange)
-                                Text("Low Contrast Example")
+                                Text("Poor Contrast")
                                     .font(.caption)
                                     .fontWeight(.bold)
                             }
-                            Text("Check your console for the warning!")
+                            Text("Would trigger validation warning")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
