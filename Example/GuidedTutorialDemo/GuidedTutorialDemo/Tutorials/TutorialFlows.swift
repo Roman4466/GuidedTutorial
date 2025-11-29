@@ -623,66 +623,6 @@ struct TutorialFlows {
                 showArrow: true
             ),
             TutorialStep(
-                targetKey: "notificationBell",
-                title: "WCAG Validation ",
-                description: "You can enable accessibility validation by setting validateAccessibility: true in TutorialFlow. The framework will log contrast warnings in DEBUG mode.",
-                highlightShape: .circle,
-                tooltipPosition: .bottom(offset: 20),
-                showArrow: false,
-                customContent: {
-                    AnyView(
-                        VStack(spacing: 8) {
-                            HStack(spacing: 5) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                Text("WCAG AA Compliant")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                            }
-                            Text("Good contrast: 21:1")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                        }
-                    )
-                },
-                tooltipStyle: TooltipStyle(
-                    backgroundColor: .white,
-                    cornerRadius: 12,
-                    titleColor: .black,
-                    descriptionColor: .black,
-                )
-            ),
-            TutorialStep(
-                targetKey: "counter",
-                title: "Low Contrast Example ",
-                description: "This step intentionally uses poor contrast. With validateAccessibility: true, you would see warnings in the console for this tooltip.",
-                highlightShape: .circle,
-                tooltipPosition: .bottom(offset: 20),
-                showArrow: false,
-                customContent: {
-                    AnyView(
-                        VStack(spacing: 8) {
-                            HStack(spacing: 5) {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundColor(.orange)
-                                Text("Poor Contrast")
-                                    .font(.caption)
-                                    .fontWeight(.bold)
-                            }
-                            Text("Would trigger validation warning")
-                                .font(.caption2)
-                                .foregroundColor(.secondary)
-                        }
-                    )
-                },
-                tooltipStyle: TooltipStyle(
-                    backgroundColor: Color(red: 1.0, green: 1.0, blue: 0.9),
-                    cornerRadius: 12,
-                    titleColor: Color(red: 1.0, green: 0.9, blue: 0.5),
-                    descriptionColor: Color(red: 1.0, green: 0.85, blue: 0.4)
-                )
-            ),
-            TutorialStep(
                 targetKey: "imageGallery",
                 title: "Accessible by Default",
                 description: "All accessibility features work automatically - no extra code needed! The framework handles VoiceOver, Dynamic Type, and Reduced Motion out of the box.",

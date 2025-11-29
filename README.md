@@ -12,7 +12,7 @@ A SwiftUI framework for creating interactive guided tutorials with tooltips, spo
 - **Skip Gestures** - Allow users to skip tutorials with swipe or long press gestures
 - **Blur Effects** - Customizable background blur with adjustable radius and opacity
 - **Button Customization** - Full control over tooltip button styles, colors, and layouts
-- **Accessibility** - Built-in WCAG 2.1 color contrast validation
+- **Accessibility Support** - VoiceOver, Dynamic Type, and Reduced Motion support
 - **Step-by-Step Flow** - Manage multi-step tutorial flows with callbacks
 
 ## Requirements
@@ -289,15 +289,10 @@ tutorialCoordinator.completeTutorial()
 
 ## Accessibility
 
-The framework includes WCAG 2.1 color contrast validation. Enable validation in DEBUG builds:
-
-```swift
-let flow = TutorialFlow(
-    name: "My Tutorial",
-    steps: steps,
-    validateAccessibility: true  // Validates contrast ratios
-)
-```
+The framework supports standard iOS accessibility features:
+- **VoiceOver** - All UI elements have proper accessibility labels and hints
+- **Dynamic Type** - Tooltips adapt to user's preferred text size
+- **Reduced Motion** - Animations are disabled when Reduce Motion is enabled
 
 ## Example App
 
