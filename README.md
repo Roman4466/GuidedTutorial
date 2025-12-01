@@ -77,7 +77,7 @@ Button("Get Started") {
 ```swift
 var body: some View {
     YourContentView()
-        .tutorialOverlay(coordinator: tutorialCoordinator)
+        .guidedTutorial(coordinator: tutorialCoordinator)
 }
 ```
 
